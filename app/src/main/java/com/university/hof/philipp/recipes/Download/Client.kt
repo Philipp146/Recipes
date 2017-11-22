@@ -1,9 +1,15 @@
 package com.university.hof.philipp.recipes.Download
 
+import android.util.Log
+import com.google.gson.GsonBuilder
+import com.university.hof.philipp.recipes.Model.IngredientList
+import com.university.hof.philipp.recipes.Model.RecipeList
+import com.university.hof.philipp.recipes.Model.RecipeListSingleton
+import retrofit2.Call
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.Retrofit
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Callback
+import retrofit2.Response
 
 
 /**
@@ -12,51 +18,30 @@ import okhttp3.logging.HttpLoggingInterceptor;
 class Client {
 
     private var retrofit: Retrofit? = null
-    private val SEARCH_URL : String = "http://food2fork.com/api/search"
-    private val RECIPE_URL : String = "http://food2fork.com/api/get"
+    private val SEARCH_URL : String = "http://food2fork.com/api/"
+    private val RECIPE_URL : String = "http://food2fork.com/api/get/"
 
-/*
-    fun getClient(key: String): Retrofit {
+    public fun getData(){
+        val gson = GsonBuilder().create()
+        val retrofit = Retrofit.Builder().baseUrl(SEARCH_URL).
+                addConverterFactory(GsonConverterFactory.create(gson)).build()
 
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-        val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+        val api = retrofit.create(ClientInterfaceApi::class.java)
 
-        retrofit?.let {
+        val call = api.getRecipes("97dd5475c88b44ce08af3b18e46b8c3d", "chicken")
+        call.enqueue(object : Callback<RecipeList> {
 
-            if(key == "search") {
-                retrofit = Retrofit.Builder()
-                        .baseUrl(SEARCH_URL)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .client(client)
-                        .build()
+            override fun onFailure(call: Call<RecipeList>?, t: Throwable?) {
+                Log.d("FAILURE", t!!.message)
             }
 
-            if(key == "recipe") {
-                retrofit = Retrofit.Builder()
-                        .baseUrl(RECIPE_URL)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .client(client)
-                        .build()
+            override fun onResponse(call: Call<RecipeList>?, response: Response<RecipeList>?) {
+                val code = response!!.code()
+                Log.d("TAAAAAAG", code.toString())
+                val data = response.body()!!
+                RecipeListSingleton.instance.recipeListData = data
+                Log.d("TAAAAAg", data.toString())
             }
-        }
-
-        val httpClient = OkHttpClient.Builder()
-
-        val builder = Retrofit.Builder()
-                .baseUrl(API_BASE_URL)
-                .addConverterFactory(
-                        GsonConverterFactory.create()
-                )
-
-        val retrofit = builder
-                .client(
-                        httpClient.build()
-                )
-                .build()
-
-        val client = retrofit.create(GitHubClient::class.java!!)
-
-        return retrofit!!
-    }*/
+        })
+    }
 }
