@@ -5,9 +5,7 @@ package com.university.hof.philipp.recipes.Model
  */
 class IngredientList {
 
-    private var ingredientList : ArrayList<Ingredient>
-        get() = ingredientList
-        set(value) {ingredientList = value}
+    private var ingredientList : ArrayList<Ingredient> = arrayListOf()
 
     public fun addIngredient(i : Ingredient){
         ingredientList.add(i)

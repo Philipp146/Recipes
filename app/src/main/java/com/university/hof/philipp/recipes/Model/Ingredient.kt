@@ -7,16 +7,10 @@ import android.media.Image
  */
 
 
-class Ingredient{
-    private var name : String
-        get() = name
-        set(value) {name = value}
-    private var img : Image
-        get() = img
-        set(value)  {img = value}
-    private var count : Int
-        get() = count
-        set(value)  {count = value}
-
-
+class Ingredient {
+    private var name : String = ""
+    private var img : Image? = null
+    private var count : Int = 0
 }
+
+
