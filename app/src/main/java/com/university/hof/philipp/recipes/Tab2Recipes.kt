@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.*
+import com.squareup.picasso.Picasso
 import com.university.hof.philipp.recipes.Download.Client
 import com.university.hof.philipp.recipes.Model.RecipeList
 import com.university.hof.philipp.recipes.Model.RecipeListModel
@@ -116,7 +117,12 @@ class Tab2Recipes : Fragment() {
 
             val positionTextView = row.findViewById<TextView>(R.id.recipeInfo)
             val rank = data.recipes[position].sRank.toInt().toString()
-            positionTextView.text = rank
+            positionTextView.text = "Rating: " + rank
+
+            val recipeImage = row.findViewById<ImageView>(R.id.recipeImage)
+            val imgUrl = data.recipes[position].imgUrl
+            Log.d("URL", imgUrl)
+            Picasso.with(mContext).load(imgUrl).fit().into(recipeImage);
 
             return row
         }
