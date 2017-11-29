@@ -1,15 +1,20 @@
 package com.university.hof.philipp.recipes
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.support.v4.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.*
 import com.university.hof.philipp.recipes.Download.Client
 import com.university.hof.philipp.recipes.Model.RecipeList
+import com.university.hof.philipp.recipes.Model.RecipeListModel
 import com.university.hof.philipp.recipes.Model.RecipeListSingleton
+
 
 /**
  * Created by philipp on 22.11.17.
@@ -29,7 +34,9 @@ class Tab2Recipes : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = MyCustomAdapter(context)
+
         setupLayout()
+        setupObserver()
         setupDownloadButton()
     }
 
@@ -40,6 +47,16 @@ class Tab2Recipes : Fragment() {
         searchView = activity.findViewById<SearchView>(R.id.searchViewRecipe)
     }
 
+    //Add observer to recognize model changes
+    private fun setupObserver() {
+        val model = ViewModelProviders.of(activity).get(RecipeListModel::class.java)
+
+        model.getRecipeListData().observe(this, Observer<RecipeList> { list ->
+            Log.d("VIEWMODEL", list!!.recipes.size.toString())
+            adapter!!.updateListData(list)
+        })
+    }
+
     private fun setupDownloadButton() {
         val downloadBtn = activity.findViewById<Button>(R.id.downloadButtonRecipe)
         downloadBtn.setOnClickListener(object: View.OnClickListener {
@@ -48,11 +65,7 @@ class Tab2Recipes : Fragment() {
 
                 //downloadRecipes for search fields
                 val search = searchView!!.query.toString()
-                Client().getRecipes(search)
-
-                //delegate download to adapter
-                adapter!!.updateListData()
-                adapter!!.notifyDataSetChanged() //Notify adapter that data was changed
+                Client().getRecipes(search, "recipe")
             }
         })
     }
@@ -67,8 +80,10 @@ class Tab2Recipes : Fragment() {
             this.mContext = context
         }
 
-        public fun updateListData() {
+        //Updates the listView when the recipe model owns the new data after the download
+        public fun updateListData(list : RecipeList) {
             data = RecipeListSingleton.instance.recipeListData
+            notifyDataSetChanged()
         }
 
         //How many rows in list
@@ -90,6 +105,12 @@ class Tab2Recipes : Fragment() {
             val layoutInflater = LayoutInflater.from(mContext)
             val row = layoutInflater.inflate(R.layout.recipe_row, viewGroup, false)
 
+            row.setOnClickListener(View.OnClickListener() {
+                fun onClick(v : View){
+                    getRecipe(data.recipes[position].id)
+                }
+            })
+
             val nameTextView = row.findViewById<TextView>(R.id.recipeName)
             nameTextView.text = data.recipes[position].title
 
@@ -98,6 +119,12 @@ class Tab2Recipes : Fragment() {
             positionTextView.text = rank
 
             return row
+        }
+
+        fun getRecipe(recipeId: String){
+            // recipe-Id example: recipeId = "0063b5"
+            Client().getRecipe(recipeId)
+            //Start new View for
         }
     }
 }

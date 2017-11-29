@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Created by philipp on 22.11.17.
  */
-
+//A single Recipe for the recipe details screen
 data class Recipe(
         @SerializedName("publisher") val publisher : String,
         @SerializedName("publisher_url") val publisherUrl : String,

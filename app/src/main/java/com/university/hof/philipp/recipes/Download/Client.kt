@@ -19,7 +19,8 @@ class Client {
     private val SEARCH_URL : String = "http://food2fork.com/api/"
     private val RECIPE_URL : String = "http://food2fork.com/api/get/"
 
-    public fun getRecipes(query : String){
+    //key -> "leftover", "recipe"
+    public fun getRecipes(query : String, key : String) {
         val gson = GsonBuilder().create()
         val retrofit = Retrofit.Builder().baseUrl(SEARCH_URL).
                 addConverterFactory(GsonConverterFactory.create(gson)).build()
@@ -37,13 +38,20 @@ class Client {
                 val code = response!!.code()
                 Log.d("TAAAAAAG", code.toString())
                 val data = response.body()!!
-                RecipeListSingleton.instance.recipeListData = data
+
+                if (key == "leftover") {
+                    RecipeListSingleton.instance.recipeListLeftOverData = data
+                }
+                if (key == "recipe") {
+                    RecipeListSingleton.instance.recipeListData = data
+                }
+
                 Log.d("TAAAAAg", data.toString())
             }
         })
     }
 
-    public fun getRecipe(){
+    public fun getRecipe(recipeId : String){
         val gson = GsonBuilder().create()
         val retrofit = Retrofit.Builder().baseUrl(RECIPE_URL).addConverterFactory(GsonConverterFactory.create(gson)).build()
         val api = retrofit.create(ClientInterfaceApi::class.java)
