@@ -11,9 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.widget.BaseAdapter
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 import kotlinx.android.synthetic.main.tab1leftovers.view.*
 
 import com.university.hof.philipp.recipes.Download.Client
@@ -21,10 +19,13 @@ import org.w3c.dom.Text
 
 class Tab1LeftOvers : Fragment() {
 
+    private var adapter : MyCustomAdapter? = null
+    private var listView : ListView? = null
+    private var searchView : SearchView? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.tab1leftovers, container, false)
-        Client().getData()
 
 
         return rootView
@@ -32,29 +33,49 @@ class Tab1LeftOvers : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupListView()
+        adapter = MyCustomAdapter(context)
+        setupLayout()
+        setupDownloadButton()
     }
 
-    private fun setupListView() {
-        //val listView = view!!.leftovers_listView
-        val listView = activity.findViewById<ListView>(R.id.leftovers_listView)
+    private fun setupLayout() {
+        listView = activity.findViewById<ListView>(R.id.leftovers_listView)
+        listView!!.adapter = adapter //Custom adapter telling listview what to render
 
-        //val grayColor = Color.parseColor("#EEEEEE")
-        //listView.setBackgroundColor(grayColor)
+        searchView = activity.findViewById<SearchView>(R.id.searchViewLeftovers)
+    }
 
-        listView.adapter = MyCustomAdapter(context) //Custom adapter telling listview what to render
+    private fun setupDownloadButton() {
+        val downloadBtn = activity.findViewById<Button>(R.id.downloadButtonLeftovers)
+        downloadBtn.setOnClickListener(object: View.OnClickListener {
+
+            override fun onClick(p0: View?) {
+
+                //downloadRecipes for search fields
+                val search = searchView!!.query.toString()
+
+
+                //delegate download to adapter
+                adapter!!.updateListData()
+                adapter!!.notifyDataSetChanged() //Notify adapter that data was changed
+            }
+        })
     }
 
     private class MyCustomAdapter(context: Context): BaseAdapter() {
 
         private val mContext : Context
 
-        private val names = arrayListOf<String>(
+        private var names = arrayListOf<String>(
                 "Donald Trump", "Steve Jobs", "Tom Cook"
         )
 
         init {
             this.mContext = context
+        }
+
+        public fun updateListData() {
+            names = arrayListOf("asda")
         }
 
         //How many rows in list

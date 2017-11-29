@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.*
+import com.university.hof.philipp.recipes.Download.Client
+import com.university.hof.philipp.recipes.Model.RecipeList
+import com.university.hof.philipp.recipes.Model.RecipeListSingleton
 
 /**
  * Created by philipp on 22.11.17.
@@ -44,9 +47,12 @@ class Tab2Recipes : Fragment() {
             override fun onClick(p0: View?) {
 
                 //downloadRecipes for search fields
+                val search = searchView!!.query.toString()
+                Client().getRecipes(search)
+
                 //delegate download to adapter
-                //adapter!!.addListData(downloadedData)
-                //adapter!!.notifyDataSetChanged() //Notify adapter that data was changed
+                adapter!!.updateListData()
+                adapter!!.notifyDataSetChanged() //Notify adapter that data was changed
             }
         })
     }
@@ -55,28 +61,27 @@ class Tab2Recipes : Fragment() {
 
         private val mContext : Context
 
-        private var names = arrayListOf<String>()
+        private var data : RecipeList = RecipeList(mutableListOf())
 
         init {
             this.mContext = context
         }
 
-        public fun addListData(data : ArrayList<String>) {
-            names = data
+        public fun updateListData() {
+            data = RecipeListSingleton.instance.recipeListData
         }
 
         //How many rows in list
         override fun getCount(): Int {
-            return names.size
+            return data.recipes.size
         }
 
         override fun getItemId(p0: Int): Long {
             return p0.toLong()
         }
-
-
+        
         override fun getItem(p0: Int): Any {
-            return names[p0]
+            return data.recipes[p0]
         }
 
         //Responsible for rendering out each row
@@ -86,14 +91,13 @@ class Tab2Recipes : Fragment() {
             val row = layoutInflater.inflate(R.layout.recipe_row, viewGroup, false)
 
             val nameTextView = row.findViewById<TextView>(R.id.recipeName)
-            nameTextView.text = names.get(position)
+            nameTextView.text = data.recipes[position].title
 
             val positionTextView = row.findViewById<TextView>(R.id.recipeInfo)
-            positionTextView.text = "Row number: $position"
+            val rank = data.recipes[position].sRank.toInt().toString()
+            positionTextView.text = rank
 
             return row
         }
     }
-
-
 }

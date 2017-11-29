@@ -18,6 +18,13 @@ class RecipeListSingleton private constructor() : Observable(){
                 notifyObservers()
             }
 
+        var recipeListLeftOverData = RecipeList(mutableListOf())
+            set(value) {
+                field = value
+                setChanged()
+                notifyObservers()
+            }
+
         companion object {
             val instance: RecipeListSingleton by lazy { Holder.INSTANCE }
         }
@@ -25,5 +32,6 @@ class RecipeListSingleton private constructor() : Observable(){
 
         init {
             recipeListData = RecipeList(mutableListOf())
+            recipeListLeftOverData = RecipeList(mutableListOf())
         }
 }
