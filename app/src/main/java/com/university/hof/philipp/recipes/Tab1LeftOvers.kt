@@ -17,6 +17,7 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.tab1leftovers.view.*
 
 import com.university.hof.philipp.recipes.Download.Client
+import org.w3c.dom.Text
 
 class Tab1LeftOvers : Fragment() {
 
@@ -48,13 +49,17 @@ class Tab1LeftOvers : Fragment() {
 
         private val mContext : Context
 
+        private val names = arrayListOf<String>(
+                "Donald Trump", "Steve Jobs", "Tom Cook"
+        )
+
         init {
             this.mContext = context
         }
 
         //How many rows in list
         override fun getCount(): Int {
-            return 5
+            return names.size
         }
 
         override fun getItemId(p0: Int): Long {
@@ -63,14 +68,24 @@ class Tab1LeftOvers : Fragment() {
 
 
         override fun getItem(p0: Int): Any {
-            return "Test String"
+            return names[p0]
         }
 
         //Responsible for rendering out each row
-        override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
-            val textView = TextView(mContext)
+        override fun getView(position: Int, convertView: View?, viewGroup: ViewGroup?): View {
+           /* val textView = TextView(mContext)
             textView.text = "Here is my row for my listview"
-            return textView
+            return textView */
+            val layoutInflater = LayoutInflater.from(mContext)
+            val row = layoutInflater.inflate(R.layout.leftover_row, viewGroup, false)
+
+            val nameTextView = row.findViewById<TextView>(R.id.textView)
+            nameTextView.text = names.get(position)
+
+            val positionTextView = row.findViewById<TextView>(R.id.position_textview)
+            positionTextView.text = "Row number: $position"
+
+            return row
         }
     }
 
