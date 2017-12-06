@@ -43,12 +43,12 @@ class Client {
         })
     }
 
-    public fun getRecipe(){
+    public fun getRecipe(recipeId : String){
         val gson = GsonBuilder().create()
         val retrofit = Retrofit.Builder().baseUrl(RECIPE_URL).addConverterFactory(GsonConverterFactory.create(gson)).build()
         val api = retrofit.create(ClientInterfaceApi::class.java)
 
-        val call = api.getRecipe(apikey = "97dd5475c88b44ce08af3b18e46b8c3d", recipeId = "0063b5")
+        val call = api.getRecipe(apikey = "97dd5475c88b44ce08af3b18e46b8c3d", recipeId = recipeId)
         call.enqueue(object : Callback<Recipe> {
             override fun onFailure(call: Call<Recipe>?, t: Throwable?) {
                 Log.d("FAILURE", t!!.message)
