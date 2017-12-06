@@ -4,17 +4,24 @@ package com.university.hof.philipp.recipes
  * Created by philipp on 22.11.17.
  */
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.graphics.Color
 import android.support.v4.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.*
 import kotlinx.android.synthetic.main.tab1leftovers.view.*
 
 import com.university.hof.philipp.recipes.Download.Client
+import com.university.hof.philipp.recipes.Model.RecipeList
+import com.university.hof.philipp.recipes.Model.RecipeListLeftOverModel
+import com.university.hof.philipp.recipes.Model.RecipeListModel
+import com.university.hof.philipp.recipes.Model.RecipeListSingleton
 import org.w3c.dom.Text
 
 class Tab1LeftOvers : Fragment() {
@@ -26,8 +33,6 @@ class Tab1LeftOvers : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.tab1leftovers, container, false)
-
-
         return rootView
     }
 
@@ -35,6 +40,7 @@ class Tab1LeftOvers : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         adapter = MyCustomAdapter(context)
         setupLayout()
+        setupObserver()
         setupDownloadButton()
     }
 
@@ -45,6 +51,16 @@ class Tab1LeftOvers : Fragment() {
         searchView = activity.findViewById<SearchView>(R.id.searchViewLeftovers)
     }
 
+    //Adds a observer to recognize model changes
+    private fun setupObserver() {
+        val model = ViewModelProviders.of(activity).get(RecipeListLeftOverModel::class.java)
+
+        model.getRecipeListData().observe(this, Observer<RecipeList> { list ->
+            Log.d("VIEWMODEL", list!!.recipes.size.toString())
+            adapter!!.updateListData(list)
+        })
+    }
+
     private fun setupDownloadButton() {
         val downloadBtn = activity.findViewById<Button>(R.id.downloadButtonLeftovers)
         downloadBtn.setOnClickListener(object: View.OnClickListener {
@@ -53,11 +69,7 @@ class Tab1LeftOvers : Fragment() {
 
                 //downloadRecipes for search fields
                 val search = searchView!!.query.toString()
-
-
-                //delegate download to adapter
-                adapter!!.updateListData()
-                adapter!!.notifyDataSetChanged() //Notify adapter that data was changed
+                Client().getRecipes(search, "leftover")
             }
         })
     }
@@ -66,21 +78,21 @@ class Tab1LeftOvers : Fragment() {
 
         private val mContext : Context
 
-        private var names = arrayListOf<String>(
-                "Donald Trump", "Steve Jobs", "Tom Cook"
-        )
+        private var data : RecipeList = RecipeList(mutableListOf())
 
         init {
             this.mContext = context
         }
 
-        public fun updateListData() {
-            names = arrayListOf("asda")
+        //Updates the listView when the model for the leftovers owns the data after the download
+        public fun updateListData(list: RecipeList) {
+            data = RecipeListSingleton.instance.recipeListLeftOverData
+            notifyDataSetChanged()
         }
 
         //How many rows in list
         override fun getCount(): Int {
-            return names.size
+            return data.recipes.size
         }
 
         override fun getItemId(p0: Int): Long {
@@ -89,7 +101,7 @@ class Tab1LeftOvers : Fragment() {
 
 
         override fun getItem(p0: Int): Any {
-            return names[p0]
+            return data.recipes[p0]
         }
 
         //Responsible for rendering out each row
@@ -101,7 +113,7 @@ class Tab1LeftOvers : Fragment() {
             val row = layoutInflater.inflate(R.layout.leftover_row, viewGroup, false)
 
             val nameTextView = row.findViewById<TextView>(R.id.textView)
-            nameTextView.text = names.get(position)
+            nameTextView.text = data.recipes[position].title
 
             val positionTextView = row.findViewById<TextView>(R.id.position_textview)
             positionTextView.text = "Row number: $position"

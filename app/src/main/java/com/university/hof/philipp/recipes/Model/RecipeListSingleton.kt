@@ -5,9 +5,9 @@ import java.util.*
 /**
  * Created by philipp on 22.11.17.
  */
-class RecipeListSingleton private constructor() : Observable(){
+class RecipeListSingleton private constructor() : Observable() {
 
-    private object Holder {
+        private object Holder {
             val INSTANCE = RecipeListSingleton()
         }
 
