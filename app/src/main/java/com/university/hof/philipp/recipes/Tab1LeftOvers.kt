@@ -11,7 +11,13 @@ import android.support.v4.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import android.os.Bundle
+
 import android.support.design.widget.TabLayout
+
+import android.support.design.widget.FloatingActionButton
+import android.support.design.widget.Snackbar
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentTransaction
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.*
@@ -25,11 +31,16 @@ class Tab1LeftOvers : Fragment() {
 
     private var adapter : MyCustomAdapter? = null
     private var listView : ListView? = null
-    private var searchView : SearchView? = null
+    private var fab : FloatingActionButton? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.tab1leftovers, container, false)
+        //floatingButton.setOnClickListener {
+            //loadIngredientSelection()
+        //}
+
+
         return rootView
     }
 
@@ -43,11 +54,19 @@ class Tab1LeftOvers : Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        Toast.makeText(activity.applicationContext, "Resumed", Toast.LENGTH_SHORT)
+    }
+
     private fun setupLayout() {
         listView = activity.findViewById<ListView>(R.id.leftovers_listView)
         listView!!.adapter = adapter //Custom adapter telling listview what to render
-
-        searchView = activity.findViewById<SearchView>(R.id.searchViewLeftovers)
+        fab = activity.findViewById<FloatingActionButton>(R.id.fab)
+        fab!!.setOnClickListener { view ->
+            loadIngredientSelection()
+            fab!!.hide()
+        }
     }
 
     //Adds a observer to recognize model changes
@@ -67,10 +86,23 @@ class Tab1LeftOvers : Fragment() {
             override fun onClick(p0: View?) {
 
                 //downloadRecipes for search fields
-                val search = searchView!!.query.toString()
-                Client().getRecipes(search, "leftover")
+                //val search = searchView!!.query.toString()
+                //Client().getRecipes(search, "leftover")
             }
         })
+    }
+
+    inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
+        val fragmentTransaction = beginTransaction()
+        fragmentTransaction.func()
+        fragmentTransaction.commit()
+    }
+
+    private fun loadIngredientSelection() {
+        activity.supportFragmentManager.inTransaction {
+            addToBackStack(IngredientSelection::class.java.name)
+            replace(R.id.main_content, IngredientSelection())
+        }
     }
 
     private class MyCustomAdapter(context: Context): BaseAdapter() {
