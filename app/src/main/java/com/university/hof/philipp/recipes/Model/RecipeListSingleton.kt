@@ -1,6 +1,7 @@
 package com.university.hof.philipp.recipes.Model
-
 import com.university.hof.philipp.recipes.Model.LeftOvers.RecipeList
+import com.university.hof.philipp.recipes.Model.Recipes.Recipe
+import com.university.hof.philipp.recipes.Model.Recipes.RecipeContainer
 import java.util.*
 
 /**
@@ -26,6 +27,13 @@ class RecipeListSingleton private constructor() : Observable() {
                 notifyObservers()
             }
 
+        var recipeData = RecipeContainer(Recipe())
+            set(value) {
+                field = value
+                setChanged()
+                notifyObservers()
+            }
+
         companion object {
             val instance: RecipeListSingleton by lazy { Holder.INSTANCE }
         }
@@ -34,5 +42,6 @@ class RecipeListSingleton private constructor() : Observable() {
         init {
             recipeListData = RecipeList(mutableListOf())
             recipeListLeftOverData = RecipeList(mutableListOf())
+            recipeData = RecipeContainer(Recipe())
         }
 }

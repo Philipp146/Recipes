@@ -3,6 +3,7 @@ package com.university.hof.philipp.recipes
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.content.Intent
 import android.support.v4.app.Fragment
 import android.view.View
 import android.view.ViewGroup
@@ -12,12 +13,16 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.squareup.picasso.Picasso
 import com.university.hof.philipp.recipes.Download.Client
 import com.university.hof.philipp.recipes.Model.LeftOvers.RecipeList
 import com.university.hof.philipp.recipes.Model.Recipes.RecipeListModel
 import com.university.hof.philipp.recipes.Model.RecipeListSingleton
+import android.view.inputmethod.InputMethodManager.HIDE_NOT_ALWAYS
+
+
 
 /**
  * Created by philipp on 22.11.17.
@@ -70,6 +75,8 @@ class Tab2Recipes : Fragment() {
                 //downloadRecipes for search fields
                 val search = searchView!!.query.toString()
                 Client().getRecipes(search, "recipe")
+                val inputManager : InputMethodManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputManager.hideSoftInputFromWindow(if (null == activity.currentFocus) null else activity.currentFocus.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
             }
         })
     }
@@ -140,11 +147,9 @@ class Tab2Recipes : Fragment() {
 
         fun getRecipe(recipeId: String){
             // recipe-Id example: recipeId = "0063b5"
-            Client().getRecipe(recipeId)
+            startDetailScreen(recipeId)
             //Start new View for
             Log.v("Listener", "Funzt, ID = " + recipeId)
-
-            startDetailScreen()
         }
 
         inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
@@ -153,10 +158,15 @@ class Tab2Recipes : Fragment() {
             fragmentTransaction.commit()
         }
 
-        private fun startDetailScreen() {
+        private fun startDetailScreen(id : String) {
+            var details = Details()
+
+            var bundle = Bundle()
+            bundle.putString("id", id)
+            details.arguments = bundle
             mActivity.supportFragmentManager.inTransaction {
                 addToBackStack(Details::class.java.name)
-                replace(R.id.main_content, Details())
+                replace(R.id.main_content, details)
             }
         }
     }
