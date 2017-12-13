@@ -1,4 +1,4 @@
-package com.university.hof.philipp.recipes.Model
+package com.university.hof.philipp.recipes.Model.Ingredients
 
 /**
  * Created by philipp on 22.11.17.

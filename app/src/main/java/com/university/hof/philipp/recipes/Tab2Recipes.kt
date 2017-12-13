@@ -7,15 +7,17 @@ import android.support.v4.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentTransaction
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.*
 import com.squareup.picasso.Picasso
 import com.university.hof.philipp.recipes.Download.Client
-import com.university.hof.philipp.recipes.Model.RecipeList
-import com.university.hof.philipp.recipes.Model.RecipeListModel
+import com.university.hof.philipp.recipes.Model.LeftOvers.RecipeList
+import com.university.hof.philipp.recipes.Model.Recipes.RecipeListModel
 import com.university.hof.philipp.recipes.Model.RecipeListSingleton
-
 
 /**
  * Created by philipp on 22.11.17.
@@ -34,7 +36,8 @@ class Tab2Recipes : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = MyCustomAdapter(context)
+
+        adapter = MyCustomAdapter(context, activity)
 
         setupLayout()
         setupObserver()
@@ -71,14 +74,17 @@ class Tab2Recipes : Fragment() {
         })
     }
 
-    private class MyCustomAdapter(context: Context): BaseAdapter() {
+
+    private class MyCustomAdapter(context: Context, activity: FragmentActivity): BaseAdapter() {
 
         private val mContext : Context
+        private val mActivity : FragmentActivity
 
         private var data : RecipeList = RecipeList(mutableListOf())
 
         init {
             this.mContext = context
+            this.mActivity = activity
         }
 
         //Updates the listView when the recipe model owns the new data after the download
@@ -106,11 +112,18 @@ class Tab2Recipes : Fragment() {
             val layoutInflater = LayoutInflater.from(mContext)
             val row = layoutInflater.inflate(R.layout.recipe_row, viewGroup, false)
 
-            row.setOnClickListener(View.OnClickListener() {
-                fun onClick(v : View){
+            row.setOnClickListener(object: View.OnClickListener {
+                override fun onClick(v : View){
                     getRecipe(data.recipes[position].id)
                 }
             })
+
+            setupView(row, position)
+
+            return row
+        }
+
+        private fun setupView(row : View, position : Int) {
 
             val nameTextView = row.findViewById<TextView>(R.id.recipeName)
             nameTextView.text = data.recipes[position].title
@@ -121,16 +134,30 @@ class Tab2Recipes : Fragment() {
 
             val recipeImage = row.findViewById<ImageView>(R.id.recipeImage)
             val imgUrl = data.recipes[position].imgUrl
-            Log.d("URL", imgUrl)
-            Picasso.with(mContext).load(imgUrl).fit().into(recipeImage);
 
-            return row
+            Picasso.with(mContext).load(imgUrl).fit().into(recipeImage);
         }
 
         fun getRecipe(recipeId: String){
             // recipe-Id example: recipeId = "0063b5"
             Client().getRecipe(recipeId)
             //Start new View for
+            Log.v("Listener", "Funzt, ID = " + recipeId)
+
+            startDetailScreen()
+        }
+
+        inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
+            val fragmentTransaction = beginTransaction()
+            fragmentTransaction.func()
+            fragmentTransaction.commit()
+        }
+
+        private fun startDetailScreen() {
+            mActivity.supportFragmentManager.inTransaction {
+                addToBackStack(Details::class.java.name)
+                replace(R.id.main_content, Details())
+            }
         }
     }
 }

@@ -7,7 +7,6 @@ package com.university.hof.philipp.recipes
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
-import android.graphics.Color
 import android.support.v4.app.Fragment
 import android.view.View
 import android.view.ViewGroup
@@ -15,15 +14,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.*
-import kotlinx.android.synthetic.main.tab1leftovers.view.*
-import kotlinx.android.synthetic.main.tab1leftovers.*
 
 import com.university.hof.philipp.recipes.Download.Client
-import com.university.hof.philipp.recipes.Model.RecipeList
-import com.university.hof.philipp.recipes.Model.RecipeListLeftOverModel
-import com.university.hof.philipp.recipes.Model.RecipeListModel
+import com.university.hof.philipp.recipes.Model.LeftOvers.RecipeList
+import com.university.hof.philipp.recipes.Model.LeftOvers.RecipeListLeftOverModel
 import com.university.hof.philipp.recipes.Model.RecipeListSingleton
-import org.w3c.dom.Text
 
 class Tab1LeftOvers : Fragment() {
 
@@ -34,11 +29,6 @@ class Tab1LeftOvers : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.tab1leftovers, container, false)
-
-        val floatingButton = activity.findViewById<Button>(R.id.floatingButton)
-        floatingButton.setOnClickListener{
-
-        }
         return rootView
     }
 
@@ -127,7 +117,4 @@ class Tab1LeftOvers : Fragment() {
             return row
         }
     }
-
-
-
 }

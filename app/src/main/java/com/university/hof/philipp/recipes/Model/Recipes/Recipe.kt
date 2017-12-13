@@ -1,4 +1,4 @@
-package com.university.hof.philipp.recipes.Model
+package com.university.hof.philipp.recipes.Model.Recipes
 
 import com.google.gson.annotations.SerializedName
 
@@ -10,7 +10,7 @@ data class Recipe(
         @SerializedName("publisher") val publisher : String,
         @SerializedName("publisher_url") val publisherUrl : String,
         @SerializedName("source_url") val sourceUrl : String,
-        @SerializedName("ingredients") val ingredients : ArrayList<String>,
+        @SerializedName("ingredients") val ingredients : MutableList<String>,
         @SerializedName("title") val title : String,
         @SerializedName("image_url") val imgUrl : String,
         @SerializedName("social_rank") val sRank : Float

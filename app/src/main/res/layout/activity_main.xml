@@ -8,6 +8,13 @@
     android:fitsSystemWindows="true"
     tools:context="com.university.hof.philipp.recipes.MainActivity">
 
+    <!--include
+        android:id="@+id/details_fragment"
+        layout="@layout/fragment_recipe_detail"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        /-->
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"

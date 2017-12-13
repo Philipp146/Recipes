@@ -1,4 +1,4 @@
-package com.university.hof.philipp.recipes.Model
+package com.university.hof.philipp.recipes.Model.LeftOvers
 
 import com.google.gson.annotations.SerializedName
 
