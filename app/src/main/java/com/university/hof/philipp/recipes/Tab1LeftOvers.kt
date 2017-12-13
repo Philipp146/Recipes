@@ -16,6 +16,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.widget.*
 import kotlinx.android.synthetic.main.tab1leftovers.view.*
+import kotlinx.android.synthetic.main.tab1leftovers.*
 
 import com.university.hof.philipp.recipes.Download.Client
 import com.university.hof.philipp.recipes.Model.RecipeList
@@ -33,6 +34,11 @@ class Tab1LeftOvers : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.tab1leftovers, container, false)
+
+        val floatingButton = activity.findViewById<Button>(R.id.floatingButton)
+        floatingButton.setOnClickListener{
+
+        }
         return rootView
     }
 
