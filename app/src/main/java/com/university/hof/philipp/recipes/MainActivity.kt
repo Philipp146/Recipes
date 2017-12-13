@@ -18,7 +18,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TableLayout
 import android.widget.Toast
-import com.university.hof.philipp.recipes.R.id.toolbar
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.tab1leftovers.view.*
@@ -35,6 +34,7 @@ class MainActivity : AppCompatActivity() {
      */
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var fab : FloatingActionButton? = null
+    private var tabPosition = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
 
         fab = findViewById<FloatingActionButton>(R.id.fab)
 
-        //setSupportActionBar(toolbar)
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
@@ -56,6 +55,7 @@ class MainActivity : AppCompatActivity() {
         tabs.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 animateFab(tab.position)
+                tabPosition = tab.position
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {
             }
@@ -88,9 +88,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -108,6 +105,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if(fragmentManager.backStackEntryCount == 0 && tabPosition == 0){
+            fab!!.show()
+        }
     }
 
 
@@ -140,4 +144,6 @@ class MainActivity : AppCompatActivity() {
             return 2
         }
     }
+
+
 }

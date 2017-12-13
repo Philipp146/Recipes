@@ -28,6 +28,7 @@ class Tab1LeftOvers : Fragment() {
 
     private var adapter : MyCustomAdapter? = null
     private var listView : ListView? = null
+    private var fab : FloatingActionButton? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -48,12 +49,18 @@ class Tab1LeftOvers : Fragment() {
         setupDownloadButton()
     }
 
+    override fun onResume() {
+        super.onResume()
+        Toast.makeText(activity.applicationContext, "Resumed", Toast.LENGTH_SHORT)
+    }
+
     private fun setupLayout() {
         listView = activity.findViewById<ListView>(R.id.leftovers_listView)
         listView!!.adapter = adapter //Custom adapter telling listview what to render
-        val fab = activity.findViewById<FloatingActionButton>(R.id.fab)
-        fab.setOnClickListener { view ->
+        fab = activity.findViewById<FloatingActionButton>(R.id.fab)
+        fab!!.setOnClickListener { view ->
             loadIngredientSelection()
+            fab!!.hide()
         }
     }
 
