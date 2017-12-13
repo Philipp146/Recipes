@@ -1,8 +1,11 @@
-package com.university.hof.philipp.recipes.Model
+package com.university.hof.philipp.recipes.Model.Recipes
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
+import com.university.hof.philipp.recipes.Model.LeftOvers.RecipeLeftOvers
+import com.university.hof.philipp.recipes.Model.LeftOvers.RecipeList
+import com.university.hof.philipp.recipes.Model.RecipeListSingleton
 import java.util.*
 
 /**

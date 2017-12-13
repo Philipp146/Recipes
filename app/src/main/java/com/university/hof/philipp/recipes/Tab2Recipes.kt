@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.util.Log
@@ -14,8 +15,8 @@ import android.view.LayoutInflater
 import android.widget.*
 import com.squareup.picasso.Picasso
 import com.university.hof.philipp.recipes.Download.Client
-import com.university.hof.philipp.recipes.Model.RecipeList
-import com.university.hof.philipp.recipes.Model.RecipeListModel
+import com.university.hof.philipp.recipes.Model.LeftOvers.RecipeList
+import com.university.hof.philipp.recipes.Model.Recipes.RecipeListModel
 import com.university.hof.philipp.recipes.Model.RecipeListSingleton
 
 /**
@@ -35,7 +36,8 @@ class Tab2Recipes : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = MyCustomAdapter(context)
+
+        adapter = MyCustomAdapter(context, activity)
 
         setupLayout()
         setupObserver()
@@ -72,28 +74,17 @@ class Tab2Recipes : Fragment() {
         })
     }
 
-    inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
-        val fragmentTransaction = beginTransaction()
-        fragmentTransaction.func()
-        fragmentTransaction.commit()
-    }
 
-    fun startDetailScreen() {
-        activity.supportFragmentManager.inTransaction {
-            add()
-        }
-    }
-
-
-
-    private class MyCustomAdapter(context: Context): BaseAdapter() {
+    private class MyCustomAdapter(context: Context, activity: FragmentActivity): BaseAdapter() {
 
         private val mContext : Context
+        private val mActivity : FragmentActivity
 
         private var data : RecipeList = RecipeList(mutableListOf())
 
         init {
             this.mContext = context
+            this.mActivity = activity
         }
 
         //Updates the listView when the recipe model owns the new data after the download
@@ -153,8 +144,19 @@ class Tab2Recipes : Fragment() {
             //Start new View for
             Log.v("Listener", "Funzt, ID = " + recipeId)
 
-            m.supportFragmentManager.inTransaction() {
+            startDetailScreen()
+        }
 
+        inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
+            val fragmentTransaction = beginTransaction()
+            fragmentTransaction.func()
+            fragmentTransaction.commit()
+        }
+
+        private fun startDetailScreen() {
+            mActivity.supportFragmentManager.inTransaction {
+                addToBackStack(Details::class.java.name)
+                replace(R.id.main_content, Details())
             }
         }
     }

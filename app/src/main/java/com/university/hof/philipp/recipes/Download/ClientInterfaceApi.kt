@@ -3,12 +3,10 @@ package com.university.hof.philipp.recipes.Download
 /**
  * Created by philipp on 22.11.17.
  */
-import com.university.hof.philipp.recipes.Model.IngredientList
-import com.university.hof.philipp.recipes.Model.Recipe
-import com.university.hof.philipp.recipes.Model.RecipeList
+import com.university.hof.philipp.recipes.Model.Recipes.Recipe
+import com.university.hof.philipp.recipes.Model.LeftOvers.RecipeList
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.Query
 
 interface ClientInterfaceApi {

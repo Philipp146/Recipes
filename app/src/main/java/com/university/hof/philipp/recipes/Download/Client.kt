@@ -3,6 +3,8 @@ package com.university.hof.philipp.recipes.Download
 import android.util.Log
 import com.google.gson.GsonBuilder
 import com.university.hof.philipp.recipes.Model.*
+import com.university.hof.philipp.recipes.Model.LeftOvers.RecipeList
+import com.university.hof.philipp.recipes.Model.Recipes.Recipe
 import retrofit2.Call
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.Retrofit
@@ -23,7 +25,7 @@ class Client {
         val gson = GsonBuilder().create()
         val retrofit = Retrofit.Builder().baseUrl(SEARCH_URL).
                 addConverterFactory(GsonConverterFactory.create(gson)).build()
-        var i = Ingredient()
+
         val api = retrofit.create(ClientInterfaceApi::class.java)
 
         val call = api.getRecipes("97dd5475c88b44ce08af3b18e46b8c3d", query)
@@ -68,7 +70,11 @@ class Client {
                 Log.d("TAAAAAAG", code.toString())
                 val data = response.body()!!
 
-                Log.d("TAAAAAg", data.toString())
+                val respString = response.raw().request().url()
+
+                Log.d("UUURRRLLL", "" + respString)
+
+                Log.d("TAAAAAg", "" + response.body())
             }
         })
     }

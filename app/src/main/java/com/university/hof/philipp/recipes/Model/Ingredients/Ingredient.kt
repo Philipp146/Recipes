@@ -1,4 +1,4 @@
-package com.university.hof.philipp.recipes.Model
+package com.university.hof.philipp.recipes.Model.Ingredients
 
 import android.media.Image
 
