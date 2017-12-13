@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Setup Action Bar
     override fun onStart() {
         super.onStart()
         supportActionBar!!.setElevation(0.toFloat());
@@ -104,6 +106,15 @@ class MainActivity : AppCompatActivity() {
         override fun getCount(): Int {
             // Show 2 total pages.
             return 2
+        }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        if(fragmentManager.backStackEntryCount == 0) {
+            val tabs = findViewById<TabLayout>(R.id.tabs)
+            tabs.visibility = View.VISIBLE
         }
     }
 }

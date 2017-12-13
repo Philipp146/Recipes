@@ -47,9 +47,11 @@ class Details : Fragment() {
         setupLayout()
         setupObserver()
 
+        //Hide TabLayout
         val tabs = activity.findViewById<TabLayout>(R.id.tabs) as TabLayout
         tabs.visibility = View.GONE
 
+        //Download Details for Recipe
         var id = arguments.getString("id")
         Client().getRecipe(id)
     }

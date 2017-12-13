@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.*
@@ -38,6 +39,8 @@ class Tab1LeftOvers : Fragment() {
         setupLayout()
         setupObserver()
         setupDownloadButton()
+
+
     }
 
     private fun setupLayout() {
