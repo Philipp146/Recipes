@@ -14,4 +14,6 @@ data class Recipe(
         @SerializedName("title") val title : String,
         @SerializedName("image_url") val imgUrl : String,
         @SerializedName("social_rank") val sRank : Float
-)
+) {
+    constructor() : this("", "", "", mutableListOf(), "", "", 0.toFloat())
+}

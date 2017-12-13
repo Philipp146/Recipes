@@ -18,6 +18,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TableLayout
 import android.widget.Toast
+import com.university.hof.philipp.recipes.R.id.toolbar
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.tab1leftovers.view.*
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         fab = findViewById<FloatingActionButton>(R.id.fab)
 
-        setSupportActionBar(toolbar)
+        //setSupportActionBar(toolbar)
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
@@ -61,7 +62,16 @@ class MainActivity : AppCompatActivity() {
             override fun onTabReselected(tab: TabLayout.Tab) {
             }
         })
+        fab!!.setOnClickListener { view ->
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+        }
+    }
 
+    override fun onStart() {
+        super.onStart()
+        supportActionBar!!.setElevation(0.toFloat());
+        supportActionBar!!.title = "Recipes"
     }
 
     private fun animateFab(tabPosition : Int){
