@@ -8,21 +8,13 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.os.Bundle
-import android.util.Log
 
 import android.support.design.widget.FloatingActionButton
-import android.support.v4.view.ViewPager
-import android.support.v4.view.ViewPager.OnPageChangeListener
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
-import android.widget.TableLayout
-import android.widget.Toast
 
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.tab1leftovers.view.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -142,14 +134,20 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onBackPressed() {
-        super.onBackPressed()
+
+        if (fragmentManager.backStackEntryCount >= 1) {
+            fragmentManager.popBackStack()
+        }
 
         if(fragmentManager.backStackEntryCount == 0) {
             val tabs = findViewById<TabLayout>(R.id.tabs)
             tabs.visibility = View.VISIBLE
         }
+
         if(fragmentManager.backStackEntryCount == 0 && tabPosition == 0){
             fab!!.show()
         }
+
+        super.onBackPressed()
     }
 }
