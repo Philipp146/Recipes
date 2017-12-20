@@ -143,11 +143,9 @@ class Tab1LeftOvers : Fragment() {
             val layoutInflater = LayoutInflater.from(mContext)
             val row = layoutInflater.inflate(R.layout.leftover_row, viewGroup, false)
 
-            val nameTextView = row.findViewById<TextView>(R.id.textView)
+            val nameTextView = row.findViewById<TextView>(R.id.leftoverItemName)
             nameTextView.text = data.recipes[position].title
 
-            val positionTextView = row.findViewById<TextView>(R.id.position_textview)
-            positionTextView.text = "Row number: $position"
 
             return row
         }
