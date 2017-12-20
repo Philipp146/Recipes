@@ -51,8 +51,6 @@ class Tab2Recipes : Fragment() {
         setupLayout()
         setupObserver()
         setupDownloadButton()
-
-        adapter!!.updateListData()
     }
 
     private fun setupLayout() {
