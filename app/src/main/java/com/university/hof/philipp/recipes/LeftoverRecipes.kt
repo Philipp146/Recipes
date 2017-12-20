@@ -3,66 +3,64 @@ package com.university.hof.philipp.recipes
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
-import android.content.Intent
-import android.support.v4.app.Fragment
-import android.view.View
-import android.view.ViewGroup
 import android.os.Bundle
-
 import android.support.design.widget.TabLayout
-
-import android.support.design.widget.FloatingActionButton
+import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.squareup.picasso.Picasso
 import com.university.hof.philipp.recipes.Download.Client
 import com.university.hof.philipp.recipes.Model.LeftOvers.RecipeList
-import com.university.hof.philipp.recipes.Model.Recipes.RecipeListModel
+import com.university.hof.philipp.recipes.Model.LeftOvers.RecipeListLeftOverModel
 import com.university.hof.philipp.recipes.Model.RecipeListSingleton
-import android.view.inputmethod.InputMethodManager.HIDE_NOT_ALWAYS
-
-
+import com.university.hof.philipp.recipes.Model.Recipes.RecipeListModel
 
 /**
- * Created by philipp on 22.11.17.
+ * Created by patrickniepel on 20.12.17.
  */
-class Tab2Recipes : Fragment() {
+class LeftoverRecipes : Fragment() {
 
     private var adapter : MyCustomAdapter? = null
     private var listView : ListView? = null
-    private var searchView : SearchView? = null
+    private var searchData : String = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.tab2recipes, container, false)
+        val rootView = inflater.inflate(R.layout.leftover_recipes, container, false)
         return rootView
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Hide TabLayout
+        val tabs = activity.findViewById<TabLayout>(R.id.tabs) as TabLayout
+        tabs.visibility = View.GONE
+
         adapter = MyCustomAdapter(context, activity)
 
         setupLayout()
         setupObserver()
-        setupDownloadButton()
+        startDownload()
+
+        adapter!!.updateListData()
     }
 
     private fun setupLayout() {
-        listView = activity.findViewById<ListView>(R.id.recipe_listView)
+        listView = activity.findViewById<ListView>(R.id.leftoverRecipesList)
         listView!!.adapter = adapter //Custom adapter telling listview what to render
-
-        searchView = activity.findViewById<SearchView>(R.id.searchViewRecipe)
     }
 
     //Add observer to recognize model changes
     private fun setupObserver() {
-        val model = ViewModelProviders.of(activity).get(RecipeListModel::class.java)
+        val model = ViewModelProviders.of(activity).get(RecipeListLeftOverModel::class.java)
 
         model.getRecipeListData().observe(this, Observer<RecipeList> { list ->
             Log.d("VIEWMODEL", list!!.recipes.size.toString())
@@ -70,19 +68,9 @@ class Tab2Recipes : Fragment() {
         })
     }
 
-    private fun setupDownloadButton() {
-        val downloadBtn = activity.findViewById<Button>(R.id.downloadButtonRecipe)
-        downloadBtn.setOnClickListener(object: View.OnClickListener {
-
-            override fun onClick(p0: View?) {
-
-                //downloadRecipes for search fields
-                val search = searchView!!.query.toString()
-                Client().getRecipes(search, "recipe")
-                val inputManager : InputMethodManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                inputManager.hideSoftInputFromWindow(if (null == activity.currentFocus) null else activity.currentFocus.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-            }
-        })
+    private fun startDownload() {
+        searchData = arguments.getString("searchData")
+        Client().getRecipes(searchData, "leftover")
     }
 
 
@@ -100,7 +88,7 @@ class Tab2Recipes : Fragment() {
 
         //Updates the listView when the recipe model owns the new data after the download
         public fun updateListData() {
-            data = RecipeListSingleton.instance.recipeListData
+            data = RecipeListSingleton.instance.recipeListLeftOverData
             notifyDataSetChanged()
         }
 
@@ -112,7 +100,7 @@ class Tab2Recipes : Fragment() {
         override fun getItemId(p0: Int): Long {
             return p0.toLong()
         }
-        
+
         override fun getItem(p0: Int): Any {
             return data.recipes[p0]
         }

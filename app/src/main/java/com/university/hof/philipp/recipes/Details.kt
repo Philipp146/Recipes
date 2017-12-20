@@ -9,10 +9,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.ListView
-import android.widget.TextView
 import com.squareup.picasso.Picasso
 import com.university.hof.philipp.recipes.Download.Client
 import com.university.hof.philipp.recipes.Model.RecipeListSingleton
@@ -20,7 +16,8 @@ import com.university.hof.philipp.recipes.Model.Recipes.Recipe
 import com.university.hof.philipp.recipes.Model.Recipes.RecipeContainer
 import com.university.hof.philipp.recipes.Model.Recipes.RecipeModel
 import android.support.design.widget.TabLayout
-
+import android.webkit.WebView
+import android.widget.*
 
 
 /**
@@ -34,6 +31,10 @@ class Details : Fragment() {
     private var imageViewRecipe : ImageView? = null
     private var textViewPublisher : TextView? = null
     private var textViewTitle : TextView? = null
+
+    private var detailsButton : Button? = null
+
+    private var downloadFinished = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                                savedInstanceState: Bundle?): View? {
@@ -52,8 +53,11 @@ class Details : Fragment() {
         tabs.visibility = View.GONE
 
         //Download Details for Recipe
-        var id = arguments.getString("id")
-        Client().getRecipe(id)
+        if (!downloadFinished) {
+            var id = arguments.getString("id")
+            Client().getRecipe(id)
+            downloadFinished = !downloadFinished
+        }
     }
 
     private fun setupObserver() {
@@ -83,6 +87,24 @@ class Details : Fragment() {
         textViewTitle = activity.findViewById<TextView>(R.id.textViewTitleToFillIn)
 
         listView!!.adapter = adapter //Custom adapter telling listview what to render
+
+        detailsButton = activity.findViewById<Button>(R.id.buttonLoadSourceUrl)
+        setupDetailsListener()
+    }
+
+    private fun setupDetailsListener() {
+        detailsButton!!.setOnClickListener(object: View.OnClickListener {
+
+            override fun onClick(p0: View?) {
+                loadWebView()
+            }
+        })
+    }
+
+    private fun loadWebView() {
+        val sourceUrl = RecipeListSingleton.instance.recipeData.recipe.sourceUrl
+        val web = WebView(context)
+        web.loadUrl(sourceUrl)
     }
 
     private class MyCustomAdapter(context: Context): BaseAdapter() {

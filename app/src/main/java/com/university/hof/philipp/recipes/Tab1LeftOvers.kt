@@ -50,8 +50,6 @@ class Tab1LeftOvers : Fragment() {
         setupLayout()
         setupObserver()
         setupDownloadButton()
-
-
     }
 
     override fun onResume() {
@@ -84,10 +82,8 @@ class Tab1LeftOvers : Fragment() {
         downloadBtn.setOnClickListener(object: View.OnClickListener {
 
             override fun onClick(p0: View?) {
-
-                //downloadRecipes for search fields
-                //val search = searchView!!.query.toString()
-                //Client().getRecipes(search, "leftover")
+                fab!!.hide()
+                loadLeftOverRecipesFragment()
             }
         })
     }
@@ -96,6 +92,20 @@ class Tab1LeftOvers : Fragment() {
         val fragmentTransaction = beginTransaction()
         fragmentTransaction.func()
         fragmentTransaction.commit()
+    }
+
+    private fun loadLeftOverRecipesFragment() {
+        var leftoverRecipes = LeftoverRecipes()
+
+        var bundle = Bundle()
+
+        //TODO: Hier Muss noch die liste mit ausgewählten lebensmittel reingeladen werden
+        bundle.putString("searchData", "tomato, cucumber")
+        leftoverRecipes.arguments = bundle
+        activity.supportFragmentManager.inTransaction {
+            addToBackStack(LeftoverRecipes::class.java.name)
+            replace(R.id.main_content, leftoverRecipes)
+        }
     }
 
     private fun loadIngredientSelection() {
