@@ -1,37 +1,38 @@
-package com.university.hof.philipp.recipes
+package com.university.hof.philipp.recipes.Fragments
 
 /**
  * Created by philipp on 22.11.17.
  */
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
 import android.support.v4.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import android.os.Bundle
 
-import android.support.design.widget.TabLayout
-
 import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.Snackbar
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.*
+import com.university.hof.philipp.recipes.Adapter.LeftoverListViewAdapter
+import com.university.hof.philipp.recipes.Model.Ingredients.IngredientList
+import com.university.hof.philipp.recipes.R
+import android.app.Activity.RESULT_OK
+import android.content.Intent
+import android.nfc.Tag
+import android.support.design.widget.TabLayout
+import com.university.hof.philipp.recipes.Model.Ingredients.Ingredient
+import kotlinx.android.synthetic.main.activity_main.*
 
-import com.university.hof.philipp.recipes.Download.Client
-import com.university.hof.philipp.recipes.Model.LeftOvers.RecipeList
-import com.university.hof.philipp.recipes.Model.LeftOvers.RecipeListLeftOverModel
-import com.university.hof.philipp.recipes.Model.RecipeListSingleton
 
 class Tab1LeftOvers : Fragment() {
 
-    private var adapter : MyCustomAdapter? = null
+    private var listAdapter : LeftoverListViewAdapter? = null
     private var listView : ListView? = null
     private var fab : FloatingActionButton? = null
+
+    private var selectedIngredients : IngredientList = IngredientList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -46,35 +47,17 @@ class Tab1LeftOvers : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = MyCustomAdapter(context)
         setupLayout()
-        setupObserver()
         setupDownloadButton()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Toast.makeText(activity.applicationContext, "Resumed", Toast.LENGTH_SHORT)
     }
 
     private fun setupLayout() {
         listView = activity.findViewById<ListView>(R.id.leftovers_listView)
-        listView!!.adapter = adapter //Custom adapter telling listview what to render
         fab = activity.findViewById<FloatingActionButton>(R.id.fab)
         fab!!.setOnClickListener { view ->
-            loadIngredientSelection()
             fab!!.hide()
+            loadIngredientSelection()
         }
-    }
-
-    //Adds a observer to recognize model changes
-    private fun setupObserver() {
-        val model = ViewModelProviders.of(activity).get(RecipeListLeftOverModel::class.java)
-
-        model.getRecipeListData().observe(this, Observer<RecipeList> { list ->
-            Log.d("VIEWMODEL", list!!.recipes.size.toString())
-            adapter!!.updateListData(list)
-        })
     }
 
     private fun setupDownloadButton() {
@@ -82,6 +65,7 @@ class Tab1LeftOvers : Fragment() {
         downloadBtn.setOnClickListener(object: View.OnClickListener {
 
             override fun onClick(p0: View?) {
+                Log.d("AUSGELÖST", "Such Button für Leftovers wurde geklickt")
                 fab!!.hide()
                 loadLeftOverRecipesFragment()
             }
@@ -99,8 +83,8 @@ class Tab1LeftOvers : Fragment() {
 
         var bundle = Bundle()
 
-        //TODO: Hier Muss noch die liste mit ausgewählten lebensmittel reingeladen werden
-        bundle.putString("searchData", "tomato, cucumber")
+        val downloadString = createDownloadStingForLeftovers()
+        bundle.putString("searchData", downloadString)
         leftoverRecipes.arguments = bundle
         activity.supportFragmentManager.inTransaction {
             addToBackStack(LeftoverRecipes::class.java.name)
@@ -110,12 +94,55 @@ class Tab1LeftOvers : Fragment() {
 
     private fun loadIngredientSelection() {
         activity.supportFragmentManager.inTransaction {
+
+            val selectionFragment = IngredientSelection()
+            selectionFragment.setTargetFragment(this@Tab1LeftOvers, this@Tab1LeftOvers.targetRequestCode)
             addToBackStack(IngredientSelection::class.java.name)
-            replace(R.id.main_content, IngredientSelection())
+            replace(R.id.main_content, selectionFragment)
         }
     }
 
-    private class MyCustomAdapter(context: Context): BaseAdapter() {
+    private fun showListViewWithSelectedIngredients() {
+
+        //Alle deselektieren, sonst wird der Haken angezeigt, da das gleiche Layout für die Row benutzt wird
+        for (i in selectedIngredients.getIngredientList()) {
+            i.setSelected(false)
+        }
+
+
+        listAdapter = LeftoverListViewAdapter(context, selectedIngredients, false)
+        listView!!.adapter = listAdapter //Custom adapter telling listview what to render
+    }
+
+    private fun createDownloadStingForLeftovers() : String {
+        var downloadString = ""
+
+        for (ingredient in selectedIngredients.getIngredientList()) {
+            downloadString += ingredient.getName() + ", "
+        }
+
+        return downloadString
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == targetRequestCode) {
+                Log.d("ANGEKOMMEN", "" + data!!.extras["selectedIngredients"])
+                val ingredients = data!!.extras["selectedIngredients"] as ArrayList<Ingredient>
+                selectedIngredients.setIngredientList(ingredients)
+                showListViewWithSelectedIngredients()
+            }
+        }
+
+        //Show standard layout again
+        val tabs = activity.findViewById<TabLayout>(R.id.tabs) as TabLayout
+        tabs.visibility = View.VISIBLE
+        fab!!.show()
+    }
+/*
+    private class LeftoverSelectionAdapter(context: Context): BaseAdapter() {
 
         private val mContext : Context
 
@@ -159,5 +186,5 @@ class Tab1LeftOvers : Fragment() {
 
             return row
         }
-    }
+    }*/
 }

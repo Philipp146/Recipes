@@ -9,15 +9,18 @@
 
     <TextView
         android:id="@+id/leftoverItemName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="Name"
         android:gravity="center"
+        android:text="Name"
+        android:textAlignment="viewStart"
         android:textColor="@android:color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/leftoverItemImage"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
         app:layout_constraintStart_toEndOf="@+id/leftoverItemImage"
         app:layout_constraintTop_toTopOf="@+id/leftoverItemImage" />
 
@@ -28,6 +31,17 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <ImageView
+        android:id="@+id/is_selected_image"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/leftoverItemName"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/ic_launcher" />
 </android.support.constraint.ConstraintLayout>

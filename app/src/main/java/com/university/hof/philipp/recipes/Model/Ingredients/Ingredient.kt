@@ -12,22 +12,31 @@ import com.university.hof.philipp.recipes.R
 
 class Ingredient {
     private var name : String = ""
-    private var img : ImageView? = null
+    private var img : Int = 0
+    private var isSelected = false
 
     fun getName() : String{
         return name
     }
 
-    fun getImg() : Int{
-        return img!!.id
+    fun getImg() : Int {
+        return img
     }
 
-    fun setName(str : String){
+    fun setName(str : String) {
         name = str
     }
 
-    fun setImg(newImg : Int){
-        img!!.setImageResource(newImg)
+    fun setImg(newImg : Int) {
+        img = newImg
+    }
+
+    fun setSelected(selected : Boolean) {
+        isSelected = selected
+    }
+
+    fun getSelected() : Boolean {
+        return isSelected
     }
 }
 

@@ -13,6 +13,8 @@ import android.support.design.widget.FloatingActionButton
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.university.hof.philipp.recipes.Fragments.Tab1LeftOvers
+import com.university.hof.philipp.recipes.Fragments.Tab2Recipes
 
 import kotlinx.android.synthetic.main.activity_main.*
 

@@ -1,4 +1,4 @@
-package com.university.hof.philipp.recipes
+package com.university.hof.philipp.recipes.Fragments
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -18,6 +18,7 @@ import com.university.hof.philipp.recipes.Model.Recipes.RecipeModel
 import android.support.design.widget.TabLayout
 import android.webkit.WebView
 import android.widget.*
+import com.university.hof.philipp.recipes.R
 
 
 /**
@@ -25,7 +26,7 @@ import android.widget.*
  */
 class Details : Fragment() {
 
-    private var adapter : MyCustomAdapter? = null
+    private var adapter : DetailsAdapter? = null
 
     private var listView : ListView? = null
     private var imageViewRecipe : ImageView? = null
@@ -44,7 +45,8 @@ class Details : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = MyCustomAdapter(context)
+
+        adapter = DetailsAdapter(context)
         setupLayout()
         setupObserver()
 
@@ -107,7 +109,7 @@ class Details : Fragment() {
         web.loadUrl(sourceUrl)
     }
 
-    private class MyCustomAdapter(context: Context): BaseAdapter() {
+    private class DetailsAdapter(context: Context): BaseAdapter() {
 
         private val mContext : Context
 

@@ -21,8 +21,16 @@ class IngredientList {
         return ingredientList
     }
 
+    fun setIngredientList(list : ArrayList<Ingredient>) {
+        ingredientList = list
+    }
+
+    fun removeIngredient(pos : Int) {
+        ingredientList.removeAt(pos)
+    }
+
     fun addIngredientByString(str : String){
-        var i : Ingredient = Ingredient()
+        val i : Ingredient = Ingredient()
         i.setName(str)
         i.setImg(R.drawable.ic_launcher_background)
         ingredientList.add(i)
