@@ -26,12 +26,12 @@ class IngredientController {
         i.setImg(R.drawable.abc_ic_star_black_36dp)
 
         val i2 = Ingredient()
-        i.setName("Cucumber")
-        i.setImg(R.drawable.abc_ic_star_black_36dp)
+        i2.setName("Cucumber")
+        i2.setImg(R.drawable.abc_ic_star_black_36dp)
 
         val i3 = Ingredient()
-        i.setName("Onion")
-        i.setImg(R.drawable.abc_ic_star_black_36dp)
+        i3.setName("Onion")
+        i3.setImg(R.drawable.abc_ic_star_black_36dp)
 
         ingredientList.addIngredient(i)
         ingredientList.addIngredient(i2)

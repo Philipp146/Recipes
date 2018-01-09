@@ -131,7 +131,7 @@ class Tab1LeftOvers : Fragment() {
             if (requestCode == targetRequestCode) {
                 Log.d("ANGEKOMMEN", "" + data!!.extras["selectedIngredients"])
                 val ingredients = data!!.extras["selectedIngredients"] as ArrayList<Ingredient>
-                selectedIngredients.setIngredientList(ingredients)
+                selectedIngredients.addIngredients(ingredients)
                 showListViewWithSelectedIngredients()
             }
         }

@@ -13,6 +13,10 @@ class IngredientList {
         ingredientList.add(i)
     }
 
+    fun addIngredients(i : ArrayList<Ingredient>) {
+        ingredientList.addAll(i)
+    }
+
     fun getIngredient(pos : Int) : Ingredient{
         return ingredientList[pos]
     }
