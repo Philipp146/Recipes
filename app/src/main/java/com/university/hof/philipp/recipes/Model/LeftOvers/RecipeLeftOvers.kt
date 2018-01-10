@@ -9,5 +9,6 @@ import com.google.gson.annotations.SerializedName
 data class RecipeLeftOvers(@SerializedName("recipe_id") val id : String,
                            @SerializedName("title") val title : String,
                            @SerializedName("image_url") val imgUrl : String,
+                           @SerializedName("publisher") val publisherName : String,
                            @SerializedName("social_rank") val sRank : Float
 )

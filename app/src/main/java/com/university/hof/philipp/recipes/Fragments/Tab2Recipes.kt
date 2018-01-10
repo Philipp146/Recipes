@@ -136,7 +136,11 @@ class Tab2Recipes : Fragment() {
 
             val positionTextView = row.findViewById<TextView>(R.id.recipeInfo)
             val rank = data.recipes[position].sRank.toInt().toString()
-            positionTextView.text = "Rating: " + rank
+            positionTextView.text = rank
+
+            val publisherNameTextView = row.findViewById<TextView>(R.id.textViewPublisherName)
+            val publisherName = data.recipes[position].publisherName
+            publisherNameTextView.text = publisherName
 
             val recipeImage = row.findViewById<ImageView>(R.id.recipeImage)
             val imgUrl = data.recipes[position].imgUrl
