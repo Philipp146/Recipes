@@ -79,6 +79,7 @@ class Tab1LeftOvers : Fragment() {
     }
 
     private fun loadLeftOverRecipesFragment() {
+
         var leftoverRecipes = LeftoverRecipes()
 
         var bundle = Bundle()
@@ -93,9 +94,21 @@ class Tab1LeftOvers : Fragment() {
     }
 
     private fun loadIngredientSelection() {
+
+        var selectionFragment = IngredientSelection()
+
+        var bundle = Bundle()
+        var selectedValues = arrayListOf<String>()
+
+        for (selected in selectedIngredients.getIngredientList()) {
+            selectedValues.add(selected.getName())
+        }
+
+        bundle.putStringArrayList("selectedIngredients", selectedValues)
+        selectionFragment.arguments = bundle
+
         activity.supportFragmentManager.inTransaction {
 
-            val selectionFragment = IngredientSelection()
             selectionFragment.setTargetFragment(this@Tab1LeftOvers, this@Tab1LeftOvers.targetRequestCode)
             addToBackStack(IngredientSelection::class.java.name)
             replace(R.id.main_content, selectionFragment)
@@ -131,7 +144,7 @@ class Tab1LeftOvers : Fragment() {
             if (requestCode == targetRequestCode) {
                 Log.d("ANGEKOMMEN", "" + data!!.extras["selectedIngredients"])
                 val ingredients = data!!.extras["selectedIngredients"] as ArrayList<Ingredient>
-                selectedIngredients.addIngredients(ingredients)
+                selectedIngredients.setIngredientList(ingredients)
                 showListViewWithSelectedIngredients()
             }
         }

@@ -1,11 +1,14 @@
 package com.university.hof.philipp.recipes.Model.Ingredients
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.university.hof.philipp.recipes.R
+import java.io.Serializable
 
 /**
  * Created by philipp on 22.11.17.
  */
-class IngredientList {
+class IngredientList() {
 
     private var ingredientList : ArrayList<Ingredient> = arrayListOf()
 
@@ -39,5 +42,4 @@ class IngredientList {
         i.setImg(R.drawable.ic_launcher_background)
         ingredientList.add(i)
     }
-
 }

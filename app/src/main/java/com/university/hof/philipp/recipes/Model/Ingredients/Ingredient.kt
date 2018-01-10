@@ -10,7 +10,12 @@ import com.university.hof.philipp.recipes.R
  */
 
 
-class Ingredient {
+class Ingredient : Comparable<Ingredient> {
+
+    override fun compareTo(other: Ingredient): Int {
+        return name.compareTo(other.getName())
+    }
+
     private var name : String = ""
     private var img : Int = 0
     private var isSelected = false
