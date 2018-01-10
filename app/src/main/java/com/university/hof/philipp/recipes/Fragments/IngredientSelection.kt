@@ -3,7 +3,6 @@ package com.university.hof.philipp.recipes.Fragments
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +13,8 @@ import com.university.hof.philipp.recipes.Controller.IngredientController
 import com.university.hof.philipp.recipes.R
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import com.university.hof.philipp.recipes.Model.Ingredients.IngredientList
+import com.university.hof.philipp.recipes.MainActivity
 
 
 
@@ -38,10 +39,28 @@ class IngredientSelection : Fragment() {
         val tabs = activity.findViewById<TabLayout>(R.id.tabs) as TabLayout
         tabs.visibility = View.GONE
 
-        val ingredients = IngredientController().getList()
+
+        val ingredients = setupIngredientsToShow()
         listAdapter = LeftoverListViewAdapter(context, ingredients, true)
+        listAdapter!!.setSelectedIngredients(ingredients)
         setupLayout()
         setupSearchButton()
+    }
+
+    private fun setupIngredientsToShow() : IngredientList {
+
+        val ingredientsAll = IngredientController().getList()
+        ingredientsAll.getIngredientList().sortBy { it.getName() }
+        val selectedIngredients = arguments.getStringArrayList("selectedIngredients")
+        var indices = arrayListOf<Int>()
+
+        for(ingredient in ingredientsAll.getIngredientList()) {
+            if (selectedIngredients.contains(ingredient.getName())) {
+                ingredient.setSelected(true)
+            }
+        }
+
+        return ingredientsAll
     }
 
     private fun setupLayout() {
@@ -56,8 +75,8 @@ class IngredientSelection : Fragment() {
                 return false
             }
 
-            override fun onQueryTextChange(newText: String): Boolean {
-                listView!!.setFilterText(newText)
+            override fun onQueryTextChange(query: String?): Boolean {
+                listAdapter!!.filter.filter(query)
                 return true
             }
         })

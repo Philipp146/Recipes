@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
@@ -55,6 +56,12 @@ class LeftoverRecipes : Fragment() {
         startDownload()
 
         adapter!!.updateListData()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        var fab = activity.findViewById<FloatingActionButton>(R.id.fab)
+        fab!!.hide()
     }
 
     private fun setupLayout() {
