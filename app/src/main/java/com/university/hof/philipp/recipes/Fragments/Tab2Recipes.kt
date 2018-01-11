@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.squareup.picasso.Picasso
 import com.university.hof.philipp.recipes.Download.Client
+import com.university.hof.philipp.recipes.MainActivity
 import com.university.hof.philipp.recipes.Model.LeftOvers.RecipeList
 import com.university.hof.philipp.recipes.Model.Recipes.RecipeListModel
 import com.university.hof.philipp.recipes.Model.RecipeListSingleton
@@ -48,9 +49,18 @@ class Tab2Recipes : Fragment() {
         setupDownloadButton()
     }
 
+    override fun onResume() {
+        super.onResume()
+        val mainActivity = activity as MainActivity
+        mainActivity.getSupportActionBar()!!.setTitle("Recipes")
+    }
+
     private fun setupLayout() {
         listView = activity.findViewById<ListView>(R.id.recipe_listView)
         listView!!.adapter = adapter //Custom adapter telling listview what to render
+
+        val emptyView = activity.findViewById<TextView>(android.R.id.empty)
+        listView!!.emptyView = emptyView
 
         searchView = activity.findViewById<SearchView>(R.id.searchViewRecipe)
     }

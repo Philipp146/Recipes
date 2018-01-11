@@ -22,6 +22,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.nfc.Tag
 import android.support.design.widget.TabLayout
+import com.university.hof.philipp.recipes.MainActivity
 import com.university.hof.philipp.recipes.Model.Ingredients.Ingredient
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -40,8 +41,6 @@ class Tab1LeftOvers : Fragment() {
         //floatingButton.setOnClickListener {
             //loadIngredientSelection()
         //}
-
-
         return rootView
     }
 
@@ -51,8 +50,17 @@ class Tab1LeftOvers : Fragment() {
         setupDownloadButton()
     }
 
+    override fun onResume() {
+        super.onResume()
+        val mainActivity = activity as MainActivity
+        mainActivity.getSupportActionBar()!!.setTitle("Recipes")
+    }
+
     private fun setupLayout() {
         listView = activity.findViewById<ListView>(R.id.leftovers_listView)
+        var emptyView = activity.findViewById<TextView>(android.R.id.empty)
+        listView!!.emptyView = emptyView
+
         fab = activity.findViewById<FloatingActionButton>(R.id.fab)
         fab!!.setOnClickListener { view ->
             fab!!.hide()

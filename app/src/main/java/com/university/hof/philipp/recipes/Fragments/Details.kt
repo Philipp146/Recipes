@@ -18,6 +18,7 @@ import com.university.hof.philipp.recipes.Model.Recipes.RecipeModel
 import android.support.design.widget.TabLayout
 import android.webkit.WebView
 import android.widget.*
+import com.university.hof.philipp.recipes.MainActivity
 import com.university.hof.philipp.recipes.R
 
 
@@ -60,6 +61,12 @@ class Details : Fragment() {
             Client().getRecipe(id)
             downloadFinished = !downloadFinished
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val mainActivity = activity as MainActivity
+        mainActivity.getSupportActionBar()!!.setTitle("Recipe Details")
     }
 
     private fun setupObserver() {

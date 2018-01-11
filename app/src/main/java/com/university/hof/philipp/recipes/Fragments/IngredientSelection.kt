@@ -44,7 +44,12 @@ class IngredientSelection : Fragment() {
         listAdapter = LeftoverListViewAdapter(context, ingredients, true)
         listAdapter!!.setSelectedIngredients(ingredients)
         setupLayout()
-        setupSearchButton()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val mainActivity = activity as MainActivity
+        mainActivity.getSupportActionBar()!!.setTitle("Ingredient Selection")
     }
 
     private fun setupIngredientsToShow() : IngredientList {
@@ -96,12 +101,4 @@ class IngredientSelection : Fragment() {
         targetFragment.onActivityResult(targetRequestCode, RESULT_OK, intent)
         fragmentManager.popBackStack()
     }
-
-    private fun setupSearchButton() {
-        val searchButton = activity.findViewById<ImageButton>(R.id.leftoverSelectionSearchButton)
-        searchButton!!.setOnClickListener { view ->
-            val search = searchView!!.query.toString()
-        }
-    }
-
 }
