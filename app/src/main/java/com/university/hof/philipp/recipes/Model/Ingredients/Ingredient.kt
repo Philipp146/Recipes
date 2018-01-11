@@ -10,15 +10,17 @@ import com.university.hof.philipp.recipes.R
  */
 
 
-class Ingredient : Comparable<Ingredient> {
-
-    override fun compareTo(other: Ingredient): Int {
-        return name.compareTo(other.getName())
-    }
+class Ingredient(aName: String, aImg : Int, aIsSelected: Boolean) : Comparable<Ingredient> {
 
     private var name : String = ""
     private var img : Int = 0
     private var isSelected = false
+
+    init {
+        name = aName
+        img = aImg
+        isSelected = aIsSelected
+    }
 
     fun getName() : String{
         return name
@@ -42,6 +44,10 @@ class Ingredient : Comparable<Ingredient> {
 
     fun getSelected() : Boolean {
         return isSelected
+    }
+
+    override fun compareTo(other: Ingredient): Int {
+        return name.compareTo(other.getName())
     }
 }
 

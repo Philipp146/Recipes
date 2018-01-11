@@ -58,7 +58,7 @@ class LeftoverListViewAdapter(context: Context, data : IngredientList, editable 
         val selectedImage = row.findViewById<ImageView>(R.id.is_selected_image)
 
         if(ingredient.getSelected()) {
-            selectedImage.setImageResource(R.drawable.abc_btn_radio_to_on_mtrl_000)
+            selectedImage.setImageResource(R.drawable.checked)
         }
         else {
             selectedImage.setImageDrawable(null)
