@@ -5,39 +5,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="12dp">
+    android:paddingBottom="8dp">
 
     <TextView
         android:id="@+id/recipeName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
-        android:text="TextView"
-        android:textColor="@android:color/black"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Todays Best Recipe"
+        android:textColor="#000000"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/recipeImage"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/recipeInfo"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="99"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:typeface="serif"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="@+id/imageView" />
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/recipeImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/recipeName"
-        app:layout_constraintTop_toBottomOf="@+id/recipeName" />
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <ImageView
-        android:id="@+id/recipeImage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="8dp"
+        android:id="@+id/imageView"
+        android:layout_width="60dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipeInfo" />
+        app:layout_constraintBottom_toBottomOf="@+id/recipeImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/recipeImage"
+        app:srcCompat="@drawable/fire" />
+
+    <TextView
+        android:id="@+id/textViewPublisherName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:text="Jamie 'The Beast' Oliver"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/recipeImage"
+        app:layout_constraintTop_toBottomOf="@+id/recipeName" />
 
 
 </android.support.constraint.ConstraintLayout>

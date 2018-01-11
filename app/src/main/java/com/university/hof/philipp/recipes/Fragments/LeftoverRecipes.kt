@@ -21,6 +21,11 @@ import com.university.hof.philipp.recipes.Model.LeftOvers.RecipeList
 import com.university.hof.philipp.recipes.Model.LeftOvers.RecipeListLeftOverModel
 import com.university.hof.philipp.recipes.Model.RecipeListSingleton
 import com.university.hof.philipp.recipes.R
+import android.R.attr.bitmap
+import android.graphics.*
+import android.opengl.ETC1.getHeight
+import android.opengl.ETC1.getWidth
+
 
 /**
  * Created by patrickniepel on 20.12.17.
@@ -135,12 +140,17 @@ class LeftoverRecipes : Fragment() {
 
             val positionTextView = row.findViewById<TextView>(R.id.recipeInfo)
             val rank = data.recipes[position].sRank.toInt().toString()
-            positionTextView.text = "Rating: " + rank
+            positionTextView.text = rank
+
+            val publisherNameTextView = row.findViewById<TextView>(R.id.textViewPublisherName)
+            val publisherName = data.recipes[position].publisherName
+            publisherNameTextView.text = publisherName
 
             val recipeImage = row.findViewById<ImageView>(R.id.recipeImage)
             val imgUrl = data.recipes[position].imgUrl
 
-            Picasso.with(mContext).load(imgUrl).fit().into(recipeImage);
+            Picasso.with(mContext).load(imgUrl).fit().into(recipeImage)
+
         }
 
         fun getRecipe(recipeId: String){
