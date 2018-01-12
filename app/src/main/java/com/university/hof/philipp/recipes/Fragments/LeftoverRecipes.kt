@@ -70,8 +70,8 @@ class LeftoverRecipes : Fragment() {
     private fun setupLayout() {
         listView = activity.findViewById<ListView>(R.id.leftoverRecipesList)
 
-        val emptyView = activity.findViewById<TextView>(android.R.id.empty)
-        listView!!.emptyView = emptyView
+        //val emptyView = activity.findViewById<TextView>(android.R.id.empty)
+        //listView!!.emptyView = emptyView
 
         listView!!.adapter = adapter //Custom adapter telling listview what to render
     }

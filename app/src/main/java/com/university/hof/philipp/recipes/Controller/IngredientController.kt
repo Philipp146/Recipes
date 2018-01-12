@@ -12,7 +12,7 @@ class IngredientController {
     private var ingredientList = IngredientList()
     private var ingredientsNames = arrayListOf<String>("Apple", "Aubergine", "Banana", "Broccoli", "Carrot", "Cherries", "Chicken", "Coffee", "Eggs", "Fish", "Grain", "Ketchup",
             "Lemon", "Meat", "Milk", "Mustard", "Noodles", "Onion", "Orange", "Pear", "Pineapple", "Potatoes", "Radish", "Raspberry", "Rice", "Salad", "Sausage", "Strawberry",
-            "Tea", "Toast", "Tomato", "Water")
+            "Tea", "Toast", "Tomato", "Water", "Cheese", "Herbs", "Garlic", "Bacon", "Chilis", "Salt, Pepper", "Kiwi", "Coconut", "Melon", "Grapes", "Wine", "Beer", "Olives")
 
     init {
         createIngredients()
@@ -60,6 +60,19 @@ class IngredientController {
                 "Toast" -> ingredientList.addIngredient(Ingredient(i, R.drawable.toast, false))
                 "Tomato" -> ingredientList.addIngredient(Ingredient(i, R.drawable.tomato, false))
                 "Water" -> ingredientList.addIngredient(Ingredient(i, R.drawable.water, false))
+                "Cheese" -> ingredientList.addIngredient(Ingredient(i, R.drawable.cheese, false))
+                "Herbs" -> ingredientList.addIngredient(Ingredient(i, R.drawable.herb, false))
+                "Garlic" -> ingredientList.addIngredient(Ingredient(i, R.drawable.garlic, false))
+                "Bacon" -> ingredientList.addIngredient(Ingredient(i, R.drawable.bacon, false))
+                "Chilis" -> ingredientList.addIngredient(Ingredient(i, R.drawable.chili, false))
+                "Salt, Pepper" -> ingredientList.addIngredient(Ingredient(i, R.drawable.salt_pepper, false))
+                "Kiwi" -> ingredientList.addIngredient(Ingredient(i, R.drawable.kiwi, false))
+                "Coconut" -> ingredientList.addIngredient(Ingredient(i, R.drawable.coconut, false))
+                "Melon" -> ingredientList.addIngredient(Ingredient(i, R.drawable.melon, false))
+                "Grapes" -> ingredientList.addIngredient(Ingredient(i, R.drawable.grapes, false))
+                "Wine" -> ingredientList.addIngredient(Ingredient(i, R.drawable.wine, false))
+                "Beer" -> ingredientList.addIngredient(Ingredient(i, R.drawable.beer, false))
+                "Olives" -> ingredientList.addIngredient(Ingredient(i, R.drawable.olives, false))
 
             }
         }

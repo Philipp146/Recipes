@@ -59,8 +59,8 @@ class Tab2Recipes : Fragment() {
         listView = activity.findViewById<ListView>(R.id.recipe_listView)
         listView!!.adapter = adapter //Custom adapter telling listview what to render
 
-        val emptyView = activity.findViewById<TextView>(android.R.id.empty)
-        listView!!.emptyView = emptyView
+        //val emptyView = activity.findViewById<TextView>(android.R.id.empty)
+        //listView!!.emptyView = emptyView
 
         searchView = activity.findViewById<SearchView>(R.id.searchViewRecipe)
     }

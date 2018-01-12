@@ -33,12 +33,15 @@
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:background="@drawable/button_style"
-            android:shadowColor="#A8A8A8"
+            android:backgroundTint="#FB8C00"
+            android:fontFamily="@font/dosis"
+            android:shadowColor="#EEEEEE"
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="5"
             android:text="Search"
-            android:textColor="#FB8C00"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
             android:textSize="15sp"
             app:layout_constraintBottom_toTopOf="@id/recipe_listView"
             tools:layout_editor_absoluteX="8dp" />
@@ -56,7 +59,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-    <TextView
+    <!--TextView
         android:id="@android:id/empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,7 +71,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="242dp" />
+        tools:layout_editor_absoluteY="242dp" /-->
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
