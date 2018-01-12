@@ -25,6 +25,7 @@ import android.R.attr.bitmap
 import android.graphics.*
 import android.opengl.ETC1.getHeight
 import android.opengl.ETC1.getWidth
+import com.university.hof.philipp.recipes.MainActivity
 
 
 /**
@@ -62,10 +63,16 @@ class LeftoverRecipes : Fragment() {
         super.onResume()
         var fab = activity.findViewById<FloatingActionButton>(R.id.fab)
         fab!!.hide()
+        val mainActivity = activity as MainActivity
+        mainActivity.getSupportActionBar()!!.setTitle("Recipes")
     }
 
     private fun setupLayout() {
         listView = activity.findViewById<ListView>(R.id.leftoverRecipesList)
+
+        //val emptyView = activity.findViewById<TextView>(android.R.id.empty)
+        //listView!!.emptyView = emptyView
+
         listView!!.adapter = adapter //Custom adapter telling listview what to render
     }
 

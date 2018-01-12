@@ -35,11 +35,4 @@ class IngredientList() {
     fun removeIngredient(pos : Int) {
         ingredientList.removeAt(pos)
     }
-
-    fun addIngredientByString(str : String){
-        val i : Ingredient = Ingredient()
-        i.setName(str)
-        i.setImg(R.drawable.ic_launcher_background)
-        ingredientList.add(i)
-    }
 }
