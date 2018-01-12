@@ -53,6 +53,22 @@ class Tab2Recipes : Fragment() {
         listView!!.adapter = adapter //Custom adapter telling listview what to render
 
         searchView = activity.findViewById<SearchView>(R.id.searchViewRecipe)
+
+        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+                val search = searchView!!.query.toString()
+                Client().getRecipes(search, "recipe")
+                val inputManager : InputMethodManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputManager.hideSoftInputFromWindow(if (null == activity.currentFocus) null else activity.currentFocus.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+                return false
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                //listAdapter!!.filter.filter(query)
+                return true
+            }
+        })
     }
 
     //Add observer to recognize model changes

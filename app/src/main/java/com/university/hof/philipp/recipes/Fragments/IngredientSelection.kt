@@ -72,7 +72,7 @@ class IngredientSelection : Fragment() {
         searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String): Boolean {
-                return false
+                return true
             }
 
             override fun onQueryTextChange(query: String?): Boolean {
