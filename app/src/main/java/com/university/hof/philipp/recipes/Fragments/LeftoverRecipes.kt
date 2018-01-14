@@ -70,9 +70,6 @@ class LeftoverRecipes : Fragment() {
     private fun setupLayout() {
         listView = activity.findViewById<ListView>(R.id.leftoverRecipesList)
 
-        //val emptyView = activity.findViewById<TextView>(android.R.id.empty)
-        //listView!!.emptyView = emptyView
-
         listView!!.adapter = adapter //Custom adapter telling listview what to render
     }
 
@@ -105,8 +102,9 @@ class LeftoverRecipes : Fragment() {
         }
 
         //Updates the listView when the recipe model owns the new data after the download
-        public fun updateListData() {
+        fun updateListData() {
             data = RecipeListSingleton.instance.recipeListLeftOverData
+            toggleEmptyView()
             notifyDataSetChanged()
         }
 
@@ -138,6 +136,17 @@ class LeftoverRecipes : Fragment() {
             setupView(row, position)
 
             return row
+        }
+
+        private fun toggleEmptyView() {
+            val emptyView = mActivity.findViewById<TextView>(R.id.empt_view_leftovers)
+
+            if (this.count != 0) {
+                emptyView.visibility = View.GONE
+            }
+            else {
+                emptyView.visibility = View.VISIBLE
+            }
         }
 
         private fun setupView(row : View, position : Int) {

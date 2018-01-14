@@ -22,8 +22,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--TextView
-        android:id="@android:id/empty"
+    <TextView
+        android:id="@+id/empt_view_leftovers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -34,7 +34,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="242dp" /-->
+        tools:layout_editor_absoluteY="242dp" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"

@@ -3,6 +3,7 @@ package com.university.hof.philipp.recipes.Fragments
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.opengl.Visibility
 import android.support.v4.app.Fragment
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +33,7 @@ class Tab2Recipes : Fragment() {
     private var adapter : RecipesAdapter? = null
     private var listView : ListView? = null
     private var searchView : SearchView? = null
+    private var emptyView : TextView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -59,7 +61,7 @@ class Tab2Recipes : Fragment() {
         listView = activity.findViewById<ListView>(R.id.recipe_listView)
         listView!!.adapter = adapter //Custom adapter telling listview what to render
 
-        //val emptyView = activity.findViewById<TextView>(android.R.id.empty)
+        emptyView = activity.findViewById<TextView>(R.id.empty_view_tab_2)
         //listView!!.emptyView = emptyView
 
         searchView = activity.findViewById<SearchView>(R.id.searchViewRecipe)
@@ -86,7 +88,6 @@ class Tab2Recipes : Fragment() {
         val model = ViewModelProviders.of(activity).get(RecipeListModel::class.java)
 
         model.getRecipeListData().observe(this, Observer<RecipeList> { list ->
-            Log.d("VIEWMODEL", list!!.recipes.size.toString())
             adapter!!.updateListData()
         })
     }
@@ -120,8 +121,9 @@ class Tab2Recipes : Fragment() {
         }
 
         //Updates the listView when the recipe model owns the new data after the download
-        public fun updateListData() {
+        fun updateListData() {
             data = RecipeListSingleton.instance.recipeListData
+            toggleEmptyView()
             notifyDataSetChanged()
         }
 
@@ -146,6 +148,8 @@ class Tab2Recipes : Fragment() {
 
             row.setOnClickListener(object: View.OnClickListener {
                 override fun onClick(v : View){
+                    val inputManager : InputMethodManager = mActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputManager.hideSoftInputFromWindow(if (null == mActivity.currentFocus) null else mActivity.currentFocus.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
                     getRecipe(data.recipes[position].id)
                 }
             })
@@ -153,6 +157,16 @@ class Tab2Recipes : Fragment() {
             setupView(row, position)
 
             return row
+        }
+
+        private fun toggleEmptyView() {
+            val emptyView = mActivity.findViewById<TextView>(R.id.empty_view_tab_2)
+            if (this.count != 0) {
+                emptyView.visibility = View.GONE
+            }
+            else {
+                emptyView.visibility = View.VISIBLE
+            }
         }
 
         private fun setupView(row : View, position : Int) {

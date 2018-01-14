@@ -32,6 +32,7 @@ class Tab1LeftOvers : Fragment() {
     private var listAdapter : LeftoverListViewAdapter? = null
     private var listView : ListView? = null
     private var fab : FloatingActionButton? = null
+    private var emptyView : TextView? = null
 
     private var selectedIngredients : IngredientList = IngredientList()
 
@@ -54,12 +55,18 @@ class Tab1LeftOvers : Fragment() {
         super.onResume()
         val mainActivity = activity as MainActivity
         mainActivity.getSupportActionBar()!!.setTitle("Recipes")
+
+        if (selectedIngredients.getIngredientList().size != 0) {
+            emptyView!!.visibility = View.GONE
+        }
+        else {
+            emptyView!!.visibility = View.VISIBLE
+        }
     }
 
     private fun setupLayout() {
         listView = activity.findViewById<ListView>(R.id.leftovers_listView)
-        var emptyView = activity.findViewById<TextView>(android.R.id.empty)
-        listView!!.emptyView = emptyView
+        emptyView = activity.findViewById<TextView>(R.id.empty_view_tab_1)
 
         fab = activity.findViewById<FloatingActionButton>(R.id.fab)
         fab!!.setOnClickListener { view ->
@@ -154,6 +161,8 @@ class Tab1LeftOvers : Fragment() {
                 val ingredients = data!!.extras["selectedIngredients"] as ArrayList<Ingredient>
                 selectedIngredients.setIngredientList(ingredients)
                 showListViewWithSelectedIngredients()
+
+                toggleEmptyView()
             }
         }
 
@@ -161,6 +170,15 @@ class Tab1LeftOvers : Fragment() {
         val tabs = activity.findViewById<TabLayout>(R.id.tabs) as TabLayout
         tabs.visibility = View.VISIBLE
         fab!!.show()
+    }
+
+    private fun toggleEmptyView() {
+        if (selectedIngredients.getIngredientList().size != 0) {
+            emptyView!!.visibility = View.GONE
+        }
+        else {
+            emptyView!!.visibility = View.VISIBLE
+        }
     }
 /*
     private class LeftoverSelectionAdapter(context: Context): BaseAdapter() {

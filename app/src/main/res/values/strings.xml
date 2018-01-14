@@ -3,11 +3,12 @@
     <string name="title_activity_main">Recipes</string>
     <string name="tab_text_1">Leftovers</string>
     <string name="tab_text_2">Recipes</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">About</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search">Search</string>
     <string name="noDataRecipe">Search For Recipes</string>
+    <string name="title_activity_main22">Main22Activity</string>
 </resources>
