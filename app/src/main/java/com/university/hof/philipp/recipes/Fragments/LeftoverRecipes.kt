@@ -1,15 +1,18 @@
 package com.university.hof.philipp.recipes.Fragments
 
+import android.app.ProgressDialog
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
+import android.provider.Settings.Global.getString
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
+import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,10 +24,6 @@ import com.university.hof.philipp.recipes.Model.LeftOvers.RecipeList
 import com.university.hof.philipp.recipes.Model.LeftOvers.RecipeListLeftOverModel
 import com.university.hof.philipp.recipes.Model.RecipeListSingleton
 import com.university.hof.philipp.recipes.R
-import android.R.attr.bitmap
-import android.graphics.*
-import android.opengl.ETC1.getHeight
-import android.opengl.ETC1.getWidth
 import com.university.hof.philipp.recipes.MainActivity
 
 
@@ -36,6 +35,7 @@ class LeftoverRecipes : Fragment() {
     private var adapter : LeftoverRecipesAdapter? = null
     private var listView : ListView? = null
     private var searchData : String = ""
+    private var emptyView : TextView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -57,6 +57,9 @@ class LeftoverRecipes : Fragment() {
         startDownload()
 
         adapter!!.updateListData()
+
+        emptyView = activity.findViewById<TextView>(R.id.empty_view_leftovers)
+        emptyView!!.visibility = View.GONE
     }
 
     override fun onResume() {
@@ -65,12 +68,14 @@ class LeftoverRecipes : Fragment() {
         fab!!.hide()
         val mainActivity = activity as MainActivity
         mainActivity.getSupportActionBar()!!.setTitle("Recipes")
+
     }
 
     private fun setupLayout() {
         listView = activity.findViewById<ListView>(R.id.leftoverRecipesList)
 
         listView!!.adapter = adapter //Custom adapter telling listview what to render
+
     }
 
     //Add observer to recognize model changes
@@ -79,7 +84,9 @@ class LeftoverRecipes : Fragment() {
 
         model.getRecipeListData().observe(this, Observer<RecipeList> { list ->
             Log.d("VIEWMODEL", list!!.recipes.size.toString())
+
             adapter!!.updateListData()
+            adapter!!.isFirstCall = false
         })
     }
 
@@ -93,6 +100,7 @@ class LeftoverRecipes : Fragment() {
 
         private val mContext : Context
         private val mActivity : FragmentActivity
+        var isFirstCall = true
 
         private var data : RecipeList = RecipeList(mutableListOf())
 
@@ -139,13 +147,19 @@ class LeftoverRecipes : Fragment() {
         }
 
         private fun toggleEmptyView() {
-            val emptyView = mActivity.findViewById<TextView>(R.id.empt_view_leftovers)
+            val emptyView = mActivity.findViewById<TextView>(R.id.empty_view_leftovers)
+            val progressBar = mActivity.findViewById<ProgressBar>(R.id.progressBar)
 
             if (this.count != 0) {
                 emptyView.visibility = View.GONE
+                progressBar.visibility = View.GONE
             }
-            else {
+            else if(!isFirstCall){
+                emptyView.text = "Sorry, no recipes found"
                 emptyView.visibility = View.VISIBLE
+                progressBar.visibility = View.GONE
+            }else{
+                progressBar.visibility = View.VISIBLE
             }
         }
 

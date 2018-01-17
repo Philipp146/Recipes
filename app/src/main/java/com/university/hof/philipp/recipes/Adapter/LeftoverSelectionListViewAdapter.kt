@@ -1,6 +1,7 @@
 package com.university.hof.philipp.recipes.Adapter
 
 import android.content.Context
+import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -67,6 +68,7 @@ class LeftoverSelectionListViewAdapter(context: Context, data : IngredientList):
                 notifyDataSetChanged()
             }
         })
+
 
         return row
     }
