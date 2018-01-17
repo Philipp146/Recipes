@@ -1,6 +1,7 @@
 package com.university.hof.philipp.recipes.Adapter
 
 import android.content.Context
+import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,6 +65,24 @@ class Tab1ListViewAdapter(context: Context, data : IngredientList): BaseAdapter(
                 selectedIngredient.setSelected(!selectedIngredient.getSelected())
                 handleSelection(selectedIngredient)
                 notifyDataSetChanged()
+            }
+        })
+
+        row.setOnLongClickListener(object: View.OnLongClickListener {
+            override fun onLongClick(p0: View?): Boolean {
+                val adb= AlertDialog.Builder(mContext)
+                adb.setTitle("Delete?");
+                adb.setMessage("Are you sure you want to delete " + mData.getIngredient(position).getName());
+                adb.setNegativeButton("Cancel", null);
+                adb.setPositiveButton("Ok", { dialog, whichButton ->
+                    mData.removeIngredient(position)
+
+                    val ingredientToRemove = mData.getIngredient(position)
+                    selectedIngredients.removeIngredient(ingredientToRemove)
+                    notifyDataSetChanged()
+                })
+                adb.show()
+                return true
             }
         })
 

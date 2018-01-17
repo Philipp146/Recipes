@@ -35,4 +35,8 @@ class IngredientList() {
     fun removeIngredient(pos : Int) {
         ingredientList.removeAt(pos)
     }
+
+    fun removeIngredient(i : Ingredient) {
+        ingredientList.remove(i)
+    }
 }
