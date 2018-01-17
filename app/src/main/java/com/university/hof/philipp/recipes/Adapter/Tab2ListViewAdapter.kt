@@ -79,17 +79,19 @@ class Tab2ListViewAdapter(context: Context, activity: FragmentActivity) : BaseAd
     private fun toggleEmptyView() {
         val emptyView = mActivity.findViewById<TextView>(R.id.empty_view_tab_2)
         val progressBar = mActivity.findViewById<ProgressBar>(R.id.progressBarTab2)
+
         if (this.count != 0) {
             emptyView.visibility = View.GONE
             progressBar.visibility = View.GONE
-        }else if(isFirstCall) {
-            emptyView.visibility = View.GONE
+        }else if(!isFirstCall) {
+            progressBar.visibility = View.GONE
+            emptyView.text = "Sorry no recipes found for that name"
+            emptyView.visibility = View.VISIBLE
         }else{
             progressBar.visibility = View.GONE
-            emptyView.text = "Sorry no Recipes found for that name"
+            emptyView.text = "Search for recipes by using the search bar"
             emptyView.visibility = View.VISIBLE
         }
-
     }
 
     private fun setupView(row: View, position: Int) {

@@ -67,7 +67,7 @@ class Tab2Recipes : Fragment() {
         listView!!.adapter = adapter //Custom adapter telling listview what to render
 
         emptyView = activity.findViewById<TextView>(R.id.empty_view_tab_2)
-        emptyView!!.visibility = View.GONE
+        //emptyView!!.visibility = View.VISIBLE
         //listView!!.emptyView = emptyView
 
         searchView = activity.findViewById<SearchView>(R.id.searchViewRecipe)
@@ -106,6 +106,7 @@ class Tab2Recipes : Fragment() {
 
             override fun onClick(p0: View?) {
 
+                emptyView!!.visibility = View.GONE
                 progressBar!!.visibility = View.VISIBLE
                 //downloadRecipes for search fields
                 val search = searchView!!.query.toString()

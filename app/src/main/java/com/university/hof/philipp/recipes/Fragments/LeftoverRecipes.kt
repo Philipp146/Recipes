@@ -38,6 +38,12 @@ class LeftoverRecipes : Fragment() {
     private var emptyView : TextView? = null
     private var progressBar : ProgressBar? = null
 
+    private var called = false
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.leftover_recipes, container, false)
@@ -55,7 +61,11 @@ class LeftoverRecipes : Fragment() {
 
         setupLayout()
         setupObserver()
-        startDownload()
+
+        //Download ist bereits erfolgt wenn true
+        if (!called) {
+            startDownload()
+        }
 
         adapter!!.updateListData()
 
@@ -68,12 +78,23 @@ class LeftoverRecipes : Fragment() {
         super.onResume()
         var fab = activity.findViewById<FloatingActionButton>(R.id.fab)
         fab!!.hide()
+
+        val mainActivity = activity as MainActivity
+        mainActivity.getSupportActionBar()!!.setTitle("Leftover Recipes")
+
+        //Download ist bereits erfolgt wenn true
+        if (!called) {
+            progressBar = activity.findViewById<ProgressBar>(R.id.progressBar)
+            progressBar!!.visibility = View.VISIBLE
+        }
+
+        called = true
+    }
+
+    override fun onDetach() {
+        super.onDetach()
         val mainActivity = activity as MainActivity
         mainActivity.getSupportActionBar()!!.setTitle("Recipes")
-
-        progressBar = activity.findViewById<ProgressBar>(R.id.progressBar)
-        progressBar!!.visibility = View.VISIBLE
-
     }
 
     private fun setupLayout() {
