@@ -50,7 +50,7 @@ class Details : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = DetailsListViewAdapter(context)
+        adapter = DetailsListViewAdapter(context, activity)
         setupLayout()
         setupObserver()
 
@@ -91,7 +91,7 @@ class Details : Fragment() {
             Log.d("VIEWMODEL", list!!.recipe.toString())
             adapter!!.updateListData(list)
             updateLayout()
-            //adapter!!.isFirstCall = false
+            adapter!!.isFirstCall = false
         })
     }
 
