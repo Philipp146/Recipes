@@ -36,6 +36,7 @@ class LeftoverRecipes : Fragment() {
     private var listView : ListView? = null
     private var searchData : String = ""
     private var emptyView : TextView? = null
+    private var progressBar : ProgressBar? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -60,6 +61,7 @@ class LeftoverRecipes : Fragment() {
 
         emptyView = activity.findViewById<TextView>(R.id.empty_view_leftovers)
         emptyView!!.visibility = View.GONE
+
     }
 
     override fun onResume() {
@@ -68,6 +70,9 @@ class LeftoverRecipes : Fragment() {
         fab!!.hide()
         val mainActivity = activity as MainActivity
         mainActivity.getSupportActionBar()!!.setTitle("Recipes")
+
+        progressBar = activity.findViewById<ProgressBar>(R.id.progressBar)
+        progressBar!!.visibility = View.VISIBLE
 
     }
 
@@ -158,8 +163,6 @@ class LeftoverRecipes : Fragment() {
                 emptyView.text = "Sorry, no recipes found"
                 emptyView.visibility = View.VISIBLE
                 progressBar.visibility = View.GONE
-            }else{
-                progressBar.visibility = View.VISIBLE
             }
         }
 
