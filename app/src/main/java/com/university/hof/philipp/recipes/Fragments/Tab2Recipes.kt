@@ -71,6 +71,7 @@ class Tab2Recipes : Fragment() {
             override fun onQueryTextSubmit(query: String): Boolean {
                 val search = searchView!!.query.toString()
                 Client().getRecipes(search, "recipe")
+                adapter!!.isFirstCall = false
                 val inputManager : InputMethodManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 inputManager.hideSoftInputFromWindow(if (null == activity.currentFocus) null else activity.currentFocus.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
                 return false
@@ -89,7 +90,6 @@ class Tab2Recipes : Fragment() {
 
         model.getRecipeListData().observe(this, Observer<RecipeList> { list ->
             adapter!!.updateListData()
-            adapter!!.isFirstCall = false
         })
 
     }

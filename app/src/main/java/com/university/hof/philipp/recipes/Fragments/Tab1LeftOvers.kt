@@ -139,7 +139,6 @@ class Tab1LeftOvers : Fragment() {
 
         //Alle deselektieren, sonst wird der Haken angezeigt, da das gleiche Layout für die Row benutzt wird
 
-
         listAdapter = Tab1ListViewAdapter(context, selectedLeftovers, activity)
         listView!!.adapter = listAdapter //Custom adapter telling listview what to render
     }
