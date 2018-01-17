@@ -10,11 +10,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import com.squareup.picasso.Picasso
+import com.university.hof.philipp.recipes.Controller.NetworkConnection
 import com.university.hof.philipp.recipes.Fragments.Details
 import com.university.hof.philipp.recipes.Model.LeftOvers.RecipeList
 import com.university.hof.philipp.recipes.Model.RecipeListSingleton
@@ -127,6 +125,12 @@ class Tab2ListViewAdapter(context: Context, activity: FragmentActivity) : BaseAd
     }
 
     private fun startDetailScreen(id: String) {
+
+        if (!NetworkConnection().isOnline(mContext)) {
+            Toast.makeText(mContext, "Check your internet connection", Toast.LENGTH_LONG).show()
+            return
+        }
+
         var details = Details()
 
         var bundle = Bundle()

@@ -24,6 +24,7 @@ import android.content.Intent
 import android.support.design.widget.TabLayout
 import android.view.MenuItem
 import com.university.hof.philipp.recipes.Adapter.Tab1ListViewAdapter
+import com.university.hof.philipp.recipes.Controller.NetworkConnection
 import com.university.hof.philipp.recipes.MainActivity
 import com.university.hof.philipp.recipes.Model.Ingredients.Ingredient
 
@@ -79,7 +80,6 @@ class Tab1LeftOvers : Fragment() {
 
             override fun onClick(p0: View?) {
                 Log.d("AUSGELÖST", "Such Button für Leftovers wurde geklickt")
-                fab!!.hide()
                 loadLeftOverRecipesFragment()
             }
         })
@@ -92,6 +92,13 @@ class Tab1LeftOvers : Fragment() {
     }
 
     private fun loadLeftOverRecipesFragment() {
+
+        if (!NetworkConnection().isOnline(context)) {
+            Toast.makeText(context, "Check your internet connection", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        fab!!.hide()
 
         var leftoverRecipes = LeftoverRecipes()
 
@@ -131,11 +138,9 @@ class Tab1LeftOvers : Fragment() {
     private fun showListViewWithSelectedIngredients() {
 
         //Alle deselektieren, sonst wird der Haken angezeigt, da das gleiche Layout für die Row benutzt wird
-        for (i in selectedLeftovers.getIngredientList()) {
-            i.setSelected(false)
-        }
 
-        listAdapter = Tab1ListViewAdapter(context, selectedLeftovers)
+
+        listAdapter = Tab1ListViewAdapter(context, selectedLeftovers, activity)
         listView!!.adapter = listAdapter //Custom adapter telling listview what to render
     }
 
@@ -147,8 +152,6 @@ class Tab1LeftOvers : Fragment() {
                 downloadString += ingredient.getName() + ", "
             }
         }
-
-
 
         return downloadString
     }

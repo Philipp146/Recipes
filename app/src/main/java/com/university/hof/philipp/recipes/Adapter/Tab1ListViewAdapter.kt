@@ -1,6 +1,7 @@
 package com.university.hof.philipp.recipes.Adapter
 
 import android.content.Context
+import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,8 +17,9 @@ import com.university.hof.philipp.recipes.R
 /**
  * Created by patrickniepel on 17.01.18.
  */
-class Tab1ListViewAdapter(context: Context, data : IngredientList): BaseAdapter() {
+class Tab1ListViewAdapter(context: Context, data : IngredientList, activity: FragmentActivity): BaseAdapter() {
 
+    private var mActivity : FragmentActivity
     private var mContext : Context
     private var mData: IngredientList = IngredientList()
     private var selectedIngredients = IngredientList()
@@ -25,6 +27,8 @@ class Tab1ListViewAdapter(context: Context, data : IngredientList): BaseAdapter(
     init {
         mContext = context
         mData = data
+        selectedIngredients = mData
+        mActivity = activity
     }
 
     override fun getItem(p0: Int): Any {
@@ -80,6 +84,11 @@ class Tab1ListViewAdapter(context: Context, data : IngredientList): BaseAdapter(
                     mData.removeIngredient(position)
                     selectedIngredients.removeIngredient(ingredientToRemove)
                     notifyDataSetChanged()
+
+                    if (mData.getIngredientList().isEmpty()) {
+                        val emptyView = mActivity.findViewById<TextView>(R.id.empty_view_tab_1)
+                        emptyView.visibility = View.VISIBLE
+                    }
                 })
                 adb.show()
                 return true
@@ -103,13 +112,5 @@ class Tab1ListViewAdapter(context: Context, data : IngredientList): BaseAdapter(
 
     fun getSelectedIngredients() : IngredientList {
         return selectedIngredients
-    }
-
-    fun setSelectedIngredients(list : IngredientList) {
-        for (i in list.getIngredientList()) {
-            if(i.getSelected()) {
-                selectedIngredients.addIngredient(i)
-            }
-        }
     }
 }

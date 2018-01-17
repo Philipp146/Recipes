@@ -3,26 +3,20 @@ package com.university.hof.philipp.recipes.Fragments
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
-import android.opengl.Visibility
 import android.support.v4.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import android.os.Bundle
 
-import android.support.v4.app.FragmentActivity
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import com.squareup.picasso.Picasso
 import com.university.hof.philipp.recipes.Adapter.Tab2ListViewAdapter
+import com.university.hof.philipp.recipes.Controller.NetworkConnection
 import com.university.hof.philipp.recipes.Download.Client
 import com.university.hof.philipp.recipes.MainActivity
 import com.university.hof.philipp.recipes.Model.LeftOvers.RecipeList
 import com.university.hof.philipp.recipes.Model.Recipes.RecipeListModel
-import com.university.hof.philipp.recipes.Model.RecipeListSingleton
 import com.university.hof.philipp.recipes.R
 
 
@@ -105,6 +99,12 @@ class Tab2Recipes : Fragment() {
         downloadBtn.setOnClickListener(object: View.OnClickListener {
 
             override fun onClick(p0: View?) {
+
+
+                if (!NetworkConnection().isOnline(context)) {
+                    Toast.makeText(view!!.context, "Check your internet connection", Toast.LENGTH_LONG).show()
+                    return
+                }
 
                 emptyView!!.visibility = View.GONE
                 progressBar!!.visibility = View.VISIBLE

@@ -43,17 +43,18 @@
 
     <TextView
         android:id="@+id/empty_view_tab_1"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="No Recipes! Click Add Button"
-        app:layout_constraintBottom_toBottomOf="@id/guideline"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:text="No leftovers selected! \nClick 'Add Button' to select your leftovers or use the 'Find Recipes Button' to load the top 30 recipes"
+        android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="242dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"

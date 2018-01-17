@@ -9,11 +9,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import com.squareup.picasso.Picasso
+import com.university.hof.philipp.recipes.Controller.NetworkConnection
 import com.university.hof.philipp.recipes.Fragments.Details
 import com.university.hof.philipp.recipes.Model.LeftOvers.RecipeList
 import com.university.hof.philipp.recipes.Model.RecipeListSingleton
@@ -84,9 +82,19 @@ class LeftoverRecipesListViewAdapter(context: Context, activity: FragmentActivit
             emptyView.text = "Sorry, no recipes found"
             emptyView.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
+        }
+
+        /*if (this.count != 0) {
+            emptyView.visibility = View.GONE
+            progressBar.visibility = View.GONE
+        }
+        else if(!isFirstCall){
+            emptyView.text = "Sorry, no recipes found"
+            emptyView.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
         }else{
             progressBar.visibility = View.VISIBLE
-        }
+        }*/
     }
 
     private fun setupView(row : View, position : Int) {
@@ -123,6 +131,12 @@ class LeftoverRecipesListViewAdapter(context: Context, activity: FragmentActivit
     }
 
     private fun startDetailScreen(id : String) {
+
+        if (!NetworkConnection().isOnline(mContext)) {
+            Toast.makeText(mContext, "Check your internet connection", Toast.LENGTH_LONG).show()
+            return
+        }
+
         var details = Details()
 
         var bundle = Bundle()

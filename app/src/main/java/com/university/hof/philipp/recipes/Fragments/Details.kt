@@ -19,6 +19,7 @@ import android.support.design.widget.TabLayout
 import android.webkit.WebView
 import android.widget.*
 import com.university.hof.philipp.recipes.Adapter.DetailsListViewAdapter
+import com.university.hof.philipp.recipes.Controller.NetworkConnection
 import com.university.hof.philipp.recipes.MainActivity
 import com.university.hof.philipp.recipes.R
 
@@ -50,22 +51,24 @@ class Details : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = DetailsListViewAdapter(context, activity)
-        setupLayout()
-        setupObserver()
-
         //Hide TabLayout
         val tabs = activity.findViewById<TabLayout>(R.id.tabs) as TabLayout
         tabs.visibility = View.GONE
 
-        progressBar = activity.findViewById(R.id.progressBarDetails)
-        progressBar!!.visibility = View.VISIBLE
+        adapter = DetailsListViewAdapter(context, activity)
+        setupLayout()
+
+        setupObserver()
 
         textLine = activity.findViewById(R.id.lineDetails)
         textLine!!.visibility = View.GONE
 
+
         //Download Details for Recipe
         if (!downloadFinished) {
+            progressBar = activity.findViewById(R.id.progressBarDetails)
+            progressBar!!.visibility = View.VISIBLE
+
             var id = arguments.getString("id")
             Client().getRecipe(id)
             downloadFinished = !downloadFinished
@@ -127,6 +130,12 @@ class Details : Fragment() {
     }
 
     private fun loadWebView() {
+
+        if (!NetworkConnection().isOnline(context)) {
+            Toast.makeText(context, "Check your internet connection", Toast.LENGTH_LONG).show()
+            return
+        }
+
         val sourceUrl = RecipeListSingleton.instance.recipeData.recipe.sourceUrl
         val web = WebView(context)
         web.loadUrl(sourceUrl)

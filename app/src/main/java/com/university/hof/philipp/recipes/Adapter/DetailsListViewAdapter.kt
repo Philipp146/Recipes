@@ -74,7 +74,10 @@ class DetailsListViewAdapter(context : Context, activity : FragmentActivity): Ba
         if (this.count != 0) {
             textLine.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
-        }else if(isFirstCall) {
+        }else if(!isFirstCall) {
+            progressBar.visibility = View.GONE
+        }
+        else {
             progressBar.visibility = View.VISIBLE
         }
     }
