@@ -18,6 +18,7 @@ import com.university.hof.philipp.recipes.Model.Recipes.RecipeModel
 import android.support.design.widget.TabLayout
 import android.webkit.WebView
 import android.widget.*
+import com.university.hof.philipp.recipes.Adapter.DetailsListViewAdapter
 import com.university.hof.philipp.recipes.MainActivity
 import com.university.hof.philipp.recipes.R
 
@@ -27,7 +28,7 @@ import com.university.hof.philipp.recipes.R
  */
 class Details : Fragment() {
 
-    private var adapter : DetailsAdapter? = null
+    private var adapter : DetailsListViewAdapter? = null
 
     private var listView : ListView? = null
     private var imageViewRecipe : ImageView? = null
@@ -47,7 +48,7 @@ class Details : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = DetailsAdapter(context)
+        adapter = DetailsListViewAdapter(context)
         setupLayout()
         setupObserver()
 
@@ -67,6 +68,12 @@ class Details : Fragment() {
         super.onResume()
         val mainActivity = activity as MainActivity
         mainActivity.getSupportActionBar()!!.setTitle("Recipe Details")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        val mainActivity = activity as MainActivity
+        mainActivity.supportActionBar!!.setTitle("Recipes")
     }
 
     private fun setupObserver() {
@@ -114,51 +121,5 @@ class Details : Fragment() {
         val sourceUrl = RecipeListSingleton.instance.recipeData.recipe.sourceUrl
         val web = WebView(context)
         web.loadUrl(sourceUrl)
-    }
-
-    private class DetailsAdapter(context: Context): BaseAdapter() {
-
-        private val mContext : Context
-
-        private var data : RecipeContainer = RecipeContainer(Recipe())
-
-        init {
-            this.mContext = context
-        }
-
-        //Updates the listView when the model for the leftovers owns the data after the download
-        public fun updateListData(list: RecipeContainer) {
-            data = RecipeListSingleton.instance.recipeData
-            notifyDataSetChanged()
-            Log.v("UPDATE", "Ingridient List wurde geupdated")
-        }
-
-        //How many rows in list
-        override fun getCount(): Int {
-            return data.recipe.ingredients.size
-        }
-
-        override fun getItemId(p0: Int): Long {
-            return p0.toLong()
-        }
-
-
-        override fun getItem(p0: Int): Any {
-            return data.recipe.ingredients[p0]
-        }
-
-        //Responsible for rendering out each row
-        override fun getView(position: Int, convertView: View?, viewGroup: ViewGroup?): View {
-            /* val textView = TextView(mContext)
-             textView.text = "Here is my row for my listview"
-             return textView */
-            val layoutInflater = LayoutInflater.from(mContext)
-            val row = layoutInflater.inflate(R.layout.recipe_detail_row, viewGroup, false)
-
-            val name = row.findViewById<TextView>(R.id.textViewIngredientName)
-            name.text = data.recipe.ingredients[position]
-
-            return row
-        }
     }
 }

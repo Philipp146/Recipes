@@ -19,6 +19,7 @@ import com.university.hof.philipp.recipes.Adapter.LeftoverSelectionListViewAdapt
 import com.university.hof.philipp.recipes.Model.Ingredients.IngredientList
 import com.university.hof.philipp.recipes.R
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
 import android.support.design.widget.TabLayout
 import android.view.MenuItem
@@ -36,8 +37,6 @@ class Tab1LeftOvers : Fragment() {
 
     private var selectedLeftovers: IngredientList = IngredientList()
 
-    private var selectedIngredientsToLoad : IngredientList = IngredientList()
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.tab1leftovers, container, false)
@@ -54,7 +53,6 @@ class Tab1LeftOvers : Fragment() {
         super.onResume()
         val mainActivity = activity as MainActivity
         mainActivity.supportActionBar!!.setTitle("Recipes")
-        Log.d("RESUME", "Aufgerufen")
 
         if (selectedLeftovers.getIngredientList().size != 0) {
             emptyView!!.visibility = View.GONE

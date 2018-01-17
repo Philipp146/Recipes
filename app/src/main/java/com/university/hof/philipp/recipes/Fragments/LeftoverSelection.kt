@@ -12,6 +12,7 @@ import com.university.hof.philipp.recipes.Controller.IngredientController
 import com.university.hof.philipp.recipes.R
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.util.Log
 import com.university.hof.philipp.recipes.Model.Ingredients.IngredientList
 import com.university.hof.philipp.recipes.MainActivity
 
@@ -61,6 +62,12 @@ class LeftoverSelection : Fragment() {
         }
 
         return leftoversAll
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        val mainActivity = activity as MainActivity
+        mainActivity.supportActionBar!!.setTitle("Recipes")
     }
 
     private fun setupLayout() {
