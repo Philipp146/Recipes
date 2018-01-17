@@ -38,6 +38,8 @@ class Details : Fragment() {
     private var detailsButton : Button? = null
 
     private var downloadFinished = false
+    private var progressBar : ProgressBar? = null
+    private var textLine : TextView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                                savedInstanceState: Bundle?): View? {
@@ -48,13 +50,19 @@ class Details : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = DetailsListViewAdapter(context)
+        adapter = DetailsListViewAdapter(context, activity)
         setupLayout()
         setupObserver()
 
         //Hide TabLayout
         val tabs = activity.findViewById<TabLayout>(R.id.tabs) as TabLayout
         tabs.visibility = View.GONE
+
+        progressBar = activity.findViewById(R.id.progressBarDetails)
+        progressBar!!.visibility = View.VISIBLE
+
+        textLine = activity.findViewById(R.id.lineDetails)
+        textLine!!.visibility = View.GONE
 
         //Download Details for Recipe
         if (!downloadFinished) {
@@ -83,6 +91,7 @@ class Details : Fragment() {
             Log.d("VIEWMODEL", list!!.recipe.toString())
             adapter!!.updateListData(list)
             updateLayout()
+            adapter!!.isFirstCall = false
         })
     }
 
