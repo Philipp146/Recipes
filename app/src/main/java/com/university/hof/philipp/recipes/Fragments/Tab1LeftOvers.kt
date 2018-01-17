@@ -15,33 +15,32 @@ import android.support.v4.app.FragmentTransaction
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.*
-import com.university.hof.philipp.recipes.Adapter.LeftoverListViewAdapter
+import com.university.hof.philipp.recipes.Adapter.LeftoverSelectionListViewAdapter
 import com.university.hof.philipp.recipes.Model.Ingredients.IngredientList
 import com.university.hof.philipp.recipes.R
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.nfc.Tag
 import android.support.design.widget.TabLayout
+import android.view.MenuItem
+import com.university.hof.philipp.recipes.Adapter.Tab1ListViewAdapter
 import com.university.hof.philipp.recipes.MainActivity
 import com.university.hof.philipp.recipes.Model.Ingredients.Ingredient
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class Tab1LeftOvers : Fragment() {
 
-    private var listAdapter : LeftoverListViewAdapter? = null
+    private var listAdapter : Tab1ListViewAdapter? = null
     private var listView : ListView? = null
     private var fab : FloatingActionButton? = null
     private var emptyView : TextView? = null
 
-    private var selectedIngredients : IngredientList = IngredientList()
+    private var selectedLeftovers: IngredientList = IngredientList()
+
+    private var selectedIngredientsToLoad : IngredientList = IngredientList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.tab1leftovers, container, false)
-        //floatingButton.setOnClickListener {
-            //loadIngredientSelection()
-        //}
         return rootView
     }
 
@@ -54,9 +53,10 @@ class Tab1LeftOvers : Fragment() {
     override fun onResume() {
         super.onResume()
         val mainActivity = activity as MainActivity
-        mainActivity.getSupportActionBar()!!.setTitle("Recipes")
+        mainActivity.supportActionBar!!.setTitle("Recipes")
+        Log.d("RESUME", "Aufgerufen")
 
-        if (selectedIngredients.getIngredientList().size != 0) {
+        if (selectedLeftovers.getIngredientList().size != 0) {
             emptyView!!.visibility = View.GONE
         }
         else {
@@ -110,22 +110,22 @@ class Tab1LeftOvers : Fragment() {
 
     private fun loadIngredientSelection() {
 
-        var selectionFragment = IngredientSelection()
+        var selectionFragment = LeftoverSelection()
 
         var bundle = Bundle()
         var selectedValues = arrayListOf<String>()
 
-        for (selected in selectedIngredients.getIngredientList()) {
+        for (selected in selectedLeftovers.getIngredientList()) {
             selectedValues.add(selected.getName())
         }
 
-        bundle.putStringArrayList("selectedIngredients", selectedValues)
+        bundle.putStringArrayList("selectedLeftovers", selectedValues)
         selectionFragment.arguments = bundle
 
         activity.supportFragmentManager.inTransaction {
 
             selectionFragment.setTargetFragment(this@Tab1LeftOvers, this@Tab1LeftOvers.targetRequestCode)
-            addToBackStack(IngredientSelection::class.java.name)
+            addToBackStack(LeftoverSelection::class.java.name)
             replace(R.id.main_content, selectionFragment)
         }
     }
@@ -133,23 +133,30 @@ class Tab1LeftOvers : Fragment() {
     private fun showListViewWithSelectedIngredients() {
 
         //Alle deselektieren, sonst wird der Haken angezeigt, da das gleiche Layout für die Row benutzt wird
-        for (i in selectedIngredients.getIngredientList()) {
+        for (i in selectedLeftovers.getIngredientList()) {
             i.setSelected(false)
         }
 
-
-        listAdapter = LeftoverListViewAdapter(context, selectedIngredients, false)
+        listAdapter = Tab1ListViewAdapter(context, selectedLeftovers)
         listView!!.adapter = listAdapter //Custom adapter telling listview what to render
     }
 
     private fun createDownloadStingForLeftovers() : String {
         var downloadString = ""
 
-        for (ingredient in selectedIngredients.getIngredientList()) {
-            downloadString += ingredient.getName() + ", "
+        if (listAdapter != null) {
+            for (ingredient in listAdapter!!.getSelectedIngredients().getIngredientList()) {
+                downloadString += ingredient.getName() + ", "
+            }
         }
 
+
+
         return downloadString
+    }
+
+    override fun onContextItemSelected(item: MenuItem?): Boolean {
+        return super.onContextItemSelected(item)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -157,9 +164,9 @@ class Tab1LeftOvers : Fragment() {
 
         if (resultCode == RESULT_OK) {
             if (requestCode == targetRequestCode) {
-                Log.d("ANGEKOMMEN", "" + data!!.extras["selectedIngredients"])
-                val ingredients = data!!.extras["selectedIngredients"] as ArrayList<Ingredient>
-                selectedIngredients.setIngredientList(ingredients)
+                Log.d("ANGEKOMMEN", "" + data!!.extras["selectedLeftovers"])
+                val ingredients = data!!.extras["selectedLeftovers"] as ArrayList<Ingredient>
+                selectedLeftovers.setIngredientList(ingredients)
                 showListViewWithSelectedIngredients()
 
                 toggleEmptyView()
@@ -173,57 +180,11 @@ class Tab1LeftOvers : Fragment() {
     }
 
     private fun toggleEmptyView() {
-        if (selectedIngredients.getIngredientList().size != 0) {
+        if (selectedLeftovers.getIngredientList().size != 0) {
             emptyView!!.visibility = View.GONE
         }
         else {
             emptyView!!.visibility = View.VISIBLE
         }
     }
-/*
-    private class LeftoverSelectionAdapter(context: Context): BaseAdapter() {
-
-        private val mContext : Context
-
-        private var data : RecipeList = RecipeList(mutableListOf())
-
-        init {
-            this.mContext = context
-        }
-
-        //Updates the listView when the model for the leftovers owns the data after the download
-        public fun updateListData(list: RecipeList) {
-            data = RecipeListSingleton.instance.recipeListLeftOverData
-            notifyDataSetChanged()
-        }
-
-        //How many rows in list
-        override fun getCount(): Int {
-            return data.recipes.size
-        }
-
-        override fun getItemId(p0: Int): Long {
-            return p0.toLong()
-        }
-
-
-        override fun getItem(p0: Int): Any {
-            return data.recipes[p0]
-        }
-
-        //Responsible for rendering out each row
-        override fun getView(position: Int, convertView: View?, viewGroup: ViewGroup?): View {
-           /* val textView = TextView(mContext)
-            textView.text = "Here is my row for my listview"
-            return textView */
-            val layoutInflater = LayoutInflater.from(mContext)
-            val row = layoutInflater.inflate(R.layout.leftover_row, viewGroup, false)
-
-            val nameTextView = row.findViewById<TextView>(R.id.leftoverItemName)
-            nameTextView.text = data.recipes[position].title
-
-
-            return row
-        }
-    }*/
 }

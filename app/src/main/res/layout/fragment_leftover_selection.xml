@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
-    tools:context="com.university.hof.philipp.recipes.Fragments.IngredientSelection"
+    tools:context="com.university.hof.philipp.recipes.Fragments.LeftoverSelection"
     android:background="#FFFFFF">
 
 
@@ -28,7 +28,7 @@
         android:layout_marginStart="8dp"
         android:divider="#FB8C00"
         android:dividerHeight="1px"
-        app:layout_constraintBottom_toTopOf="@+id/add_ingredients_button"
+        app:layout_constraintBottom_toTopOf="@+id/add_leftovers_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
     </ListView>
 
     <Button
-        android:id="@+id/add_ingredients_button"
+        android:id="@+id/add_leftovers_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -53,7 +53,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="Add Ingredients"
+        android:text="Add Leftovers"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"

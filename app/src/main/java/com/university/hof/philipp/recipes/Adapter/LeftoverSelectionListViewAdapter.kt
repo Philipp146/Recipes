@@ -13,26 +13,20 @@ import com.university.hof.philipp.recipes.R
 /**
  * Created by philipp on 20.12.17.
  */
-class LeftoverListViewAdapter(context: Context, data : IngredientList, editable : Boolean): BaseAdapter(), Filterable {
+class LeftoverSelectionListViewAdapter(context: Context, data : IngredientList): BaseAdapter(), Filterable {
 
     private var mContext : Context
-    private var mEditable : Boolean
     private var mDataAll : IngredientList = IngredientList()
     private var mDataFiltered : IngredientList = IngredientList()
-    private var selectedIngredients = IngredientList()
+    private var selectedLeftovers = IngredientList()
 
     init {
         mContext = context
         mDataAll = data
         mDataFiltered = mDataAll
-        mEditable = editable
-        Log.d("LeftoverListViewAdapter", "Größe der IngredientList " + mDataFiltered.getIngredientList().size)
     }
 
     override fun getItem(p0: Int): Any {
-        /*if (mEditable){
-            return mData.getIngredient(p0)
-        }*/
         return mDataFiltered.getIngredient(p0)
     }
 
@@ -65,40 +59,38 @@ class LeftoverListViewAdapter(context: Context, data : IngredientList, editable 
         }
 
         //Wenn man selektieren kann, kann auf ein Ingredient geklickt werden. Dies wird dann einer Liste hinzugefügt, die beim Schließen des Screens an das vorherige Fragment weitergegeben wird
-        if (mEditable) {
-            row.setOnClickListener(object: View.OnClickListener {
-                override fun onClick(v : View){
-                    val selectedIngredient = mDataFiltered.getIngredientList()[position]
-                    selectedIngredient.setSelected(!selectedIngredient.getSelected())
-                    handleSelection(selectedIngredient)
-                    notifyDataSetChanged()
-                }
-            })
-        }
+        row.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v : View){
+                val selectedIngredient = mDataFiltered.getIngredientList()[position]
+                selectedIngredient.setSelected(!selectedIngredient.getSelected())
+                handleSelection(selectedIngredient)
+                notifyDataSetChanged()
+            }
+        })
 
         return row
     }
 
     private fun handleSelection(ingredient : Ingredient) {
 
-        if(!selectedIngredients.getIngredientList().contains(ingredient)) {
-            selectedIngredients.addIngredient(ingredient)
+        if(!selectedLeftovers.getIngredientList().contains(ingredient)) {
+            selectedLeftovers.addIngredient(ingredient)
         }
         //Schon vorhanden
         else {
-            val index = selectedIngredients.getIngredientList().indexOf(ingredient)
-            selectedIngredients.removeIngredient(index)
+            val index = selectedLeftovers.getIngredientList().indexOf(ingredient)
+            selectedLeftovers.removeIngredient(index)
         }
     }
 
-    fun getSelectedIngredients() : IngredientList {
-        return selectedIngredients
+    fun getSelectedLeftovers() : IngredientList {
+        return selectedLeftovers
     }
 
-    fun setSelectedIngredients(list : IngredientList) {
+    fun setSelectedLeftovers(list : IngredientList) {
         for (i in list.getIngredientList()) {
             if(i.getSelected()) {
-                selectedIngredients.addIngredient(i)
+                selectedLeftovers.addIngredient(i)
             }
         }
     }
@@ -145,5 +137,4 @@ class LeftoverListViewAdapter(context: Context, data : IngredientList, editable 
             }
         }
     }
-
 }

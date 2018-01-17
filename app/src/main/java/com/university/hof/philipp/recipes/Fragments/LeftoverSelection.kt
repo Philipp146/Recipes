@@ -3,12 +3,11 @@ package com.university.hof.philipp.recipes.Fragments
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.university.hof.philipp.recipes.Adapter.LeftoverListViewAdapter
+import com.university.hof.philipp.recipes.Adapter.LeftoverSelectionListViewAdapter
 import com.university.hof.philipp.recipes.Controller.IngredientController
 import com.university.hof.philipp.recipes.R
 import android.app.Activity.RESULT_OK
@@ -16,13 +15,10 @@ import android.content.Intent
 import com.university.hof.philipp.recipes.Model.Ingredients.IngredientList
 import com.university.hof.philipp.recipes.MainActivity
 
-
-
-
-class IngredientSelection : Fragment() {
+class LeftoverSelection : Fragment() {
 
     private var searchView : SearchView? = null
-    private var listAdapter : LeftoverListViewAdapter? = null
+    private var listAdapter : LeftoverSelectionListViewAdapter? = null
     private var listView : ListView? = null
     private var addButton : Button? = null
 
@@ -40,32 +36,31 @@ class IngredientSelection : Fragment() {
         tabs.visibility = View.GONE
 
 
-        val ingredients = setupIngredientsToShow()
-        listAdapter = LeftoverListViewAdapter(context, ingredients, true)
-        listAdapter!!.setSelectedIngredients(ingredients)
+        val leftovers = setupIngredientsToShow()
+        listAdapter = LeftoverSelectionListViewAdapter(context, leftovers)
+        listAdapter!!.setSelectedLeftovers(leftovers)
         setupLayout()
     }
 
     override fun onResume() {
         super.onResume()
         val mainActivity = activity as MainActivity
-        mainActivity.getSupportActionBar()!!.setTitle("Ingredient Selection")
+        mainActivity.getSupportActionBar()!!.setTitle("Leftover Selection")
     }
 
     private fun setupIngredientsToShow() : IngredientList {
 
-        val ingredientsAll = IngredientController().getList()
-        ingredientsAll.getIngredientList().sortBy { it.getName() }
-        val selectedIngredients = arguments.getStringArrayList("selectedIngredients")
-        var indices = arrayListOf<Int>()
+        val leftoversAll = IngredientController().getList()
+        leftoversAll.getIngredientList().sortBy { it.getName() }
+        val selectedIngredients = arguments.getStringArrayList("selectedLeftovers")
 
-        for(ingredient in ingredientsAll.getIngredientList()) {
-            if (selectedIngredients.contains(ingredient.getName())) {
-                ingredient.setSelected(true)
+        for(leftover in leftoversAll.getIngredientList()) {
+            if (selectedIngredients.contains(leftover.getName())) {
+                leftover.setSelected(true)
             }
         }
 
-        return ingredientsAll
+        return leftoversAll
     }
 
     private fun setupLayout() {
@@ -86,7 +81,7 @@ class IngredientSelection : Fragment() {
             }
         })
 
-        addButton = activity.findViewById<Button>(R.id.add_ingredients_button)
+        addButton = activity.findViewById<Button>(R.id.add_leftovers_button)
         addButton!!.setOnClickListener(object: View.OnClickListener {
             override fun onClick(p0: View?) {
 
@@ -97,7 +92,7 @@ class IngredientSelection : Fragment() {
 
     private fun handleAddClick() {
         val intent = Intent(context, Tab1LeftOvers::class.java)
-        intent.putExtra("selectedIngredients", listAdapter!!.getSelectedIngredients().getIngredientList())
+        intent.putExtra("selectedLeftovers", listAdapter!!.getSelectedLeftovers().getIngredientList())
         targetFragment.onActivityResult(targetRequestCode, RESULT_OK, intent)
         fragmentManager.popBackStack()
     }
