@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "874360756724",
+    "firebase_url": "https://recipes-882b1.firebaseio.com",
+    "project_id": "recipes-882b1",
+    "storage_bucket": "recipes-882b1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874360756724:android:f3971aa2a3c40897",
+        "android_client_info": {
+          "package_name": "com.university.hof.philipp.recipes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "874360756724-lt2t59uogq99il7sugvjkp53fsoqcrdn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.university.hof.philipp.recipes",
+            "certificate_hash": "df74a72bee8a4e1ca9885a02ee522b72c86ee763"
+          }
+        },
+        {
+          "client_id": "874360756724-p80b2nf1gc4n4jcnn6huba1ntlvqf4i4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMKtZIpQ3qTR5IWQl_mcg86WKTj1URWUU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "874360756724-p80b2nf1gc4n4jcnn6huba1ntlvqf4i4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

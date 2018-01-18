@@ -11,6 +11,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.university.hof.philipp.recipes.Adapter.Tab2ListViewAdapter
 import com.university.hof.philipp.recipes.Controller.NetworkConnection
 import com.university.hof.philipp.recipes.Download.Client
@@ -31,6 +33,8 @@ class Tab2Recipes : Fragment() {
     private var emptyView : TextView? = null
     private var progressBar : ProgressBar? = null
 
+    private var adView : AdView? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.tab2recipes, container, false)
@@ -45,6 +49,7 @@ class Tab2Recipes : Fragment() {
         progressBar = activity.findViewById<ProgressBar>(R.id.progressBarTab2)
         progressBar!!.visibility = View.GONE
 
+        loadAdView()
         setupLayout()
         setupObserver()
         setupDownloadButton()
@@ -54,6 +59,12 @@ class Tab2Recipes : Fragment() {
         super.onResume()
         val mainActivity = activity as MainActivity
         mainActivity.getSupportActionBar()!!.setTitle("Recipes")
+    }
+
+    private fun loadAdView() {
+        adView = activity.findViewById<AdView>(R.id.adViewTab2) as AdView
+        val adRequest = AdRequest.Builder().build()
+        adView!!.loadAd(adRequest)
     }
 
     private fun setupLayout() {

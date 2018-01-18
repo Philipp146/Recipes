@@ -15,6 +15,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.squareup.picasso.Picasso
 import com.university.hof.philipp.recipes.Adapter.LeftoverRecipesListViewAdapter
 import com.university.hof.philipp.recipes.Download.Client
@@ -38,6 +40,8 @@ class LeftoverRecipes : Fragment() {
 
     private var calledFragment = false
 
+    private var adView : AdView? = null
+
     override fun onAttach(context: Context?) {
         super.onAttach(context)
     }
@@ -57,6 +61,7 @@ class LeftoverRecipes : Fragment() {
 
         adapter = LeftoverRecipesListViewAdapter(context, activity)
 
+        loadAdView()
         setupLayout()
         setupObserver()
 
@@ -93,6 +98,12 @@ class LeftoverRecipes : Fragment() {
         super.onDetach()
         val mainActivity = activity as MainActivity
         mainActivity.getSupportActionBar()!!.setTitle("Recipes")
+    }
+
+    private fun loadAdView() {
+        adView = activity.findViewById<AdView>(R.id.adViewLeftoverRecipes) as AdView
+        val adRequest = AdRequest.Builder().build()
+        adView!!.loadAd(adRequest)
     }
 
     private fun setupLayout() {
