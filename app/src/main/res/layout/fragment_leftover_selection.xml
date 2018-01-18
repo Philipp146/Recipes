@@ -7,17 +7,50 @@
     tools:context="com.university.hof.philipp.recipes.Fragments.LeftoverSelection"
     android:background="#FFFFFF">
 
-
-    <SearchView
-        android:id="@+id/leftoverSelectionSearchView"
+    <LinearLayout
+        android:id="@+id/linear_layout_leftover_selection"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:weightSum="100"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <SearchView
+            android:id="@+id/leftoverSelectionSearchView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="75"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/leftoverSelectionAddCustom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="25"
+            android:background="@drawable/button_style"
+            android:backgroundTint="#FB8C00"
+            android:fontFamily="@font/dosis"
+            android:shadowColor="#EEEEEE"
+            android:shadowDx="0"
+            android:layout_marginTop="8dp"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="Add Custom"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+    </LinearLayout>
+
 
     <ListView
         android:id="@+id/selection_leftovers_listview"
@@ -26,13 +59,14 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:divider="#FB8C00"
         android:dividerHeight="1px"
         app:layout_constraintBottom_toTopOf="@+id/add_leftovers_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/leftoverSelectionSearchView">
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout_leftover_selection">
 
 
     </ListView>
@@ -61,4 +95,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

@@ -77,4 +77,8 @@ class IngredientController {
             }
         }
     }
+
+    public fun getCustomIngredient(name: String) : Ingredient {
+        return Ingredient(name, R.drawable.custom, true)
+    }
 }

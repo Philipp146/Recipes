@@ -136,11 +136,9 @@ class Tab1LeftOvers : Fragment() {
     }
 
     private fun showListViewWithSelectedIngredients() {
-
-        //Alle deselektieren, sonst wird der Haken angezeigt, da das gleiche Layout für die Row benutzt wird
-
         listAdapter = Tab1ListViewAdapter(context, selectedLeftovers, activity)
         listView!!.adapter = listAdapter //Custom adapter telling listview what to render
+        listAdapter!!.setSelectedLeftovers(selectedLeftovers)
     }
 
     private fun createDownloadStingForLeftovers() : String {
@@ -153,10 +151,6 @@ class Tab1LeftOvers : Fragment() {
         }
 
         return downloadString
-    }
-
-    override fun onContextItemSelected(item: MenuItem?): Boolean {
-        return super.onContextItemSelected(item)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

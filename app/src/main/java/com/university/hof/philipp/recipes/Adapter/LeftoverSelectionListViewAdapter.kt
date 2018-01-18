@@ -97,6 +97,14 @@ class LeftoverSelectionListViewAdapter(context: Context, data : IngredientList):
         }
     }
 
+    fun addCustomIngredient(i : Ingredient) {
+        mDataAll.addIngredient(i)
+        mDataFiltered = mDataAll
+        selectedLeftovers.addIngredient(i)
+        mDataFiltered.getIngredientList().sortBy { it.getName() }
+        notifyDataSetChanged()
+    }
+
     override fun getFilter(): Filter {
 
         return object : Filter() {

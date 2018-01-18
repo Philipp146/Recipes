@@ -27,7 +27,6 @@ class Tab1ListViewAdapter(context: Context, data : IngredientList, activity: Fra
     init {
         mContext = context
         mData = data
-        selectedIngredients = mData
         mActivity = activity
     }
 
@@ -70,11 +69,13 @@ class Tab1ListViewAdapter(context: Context, data : IngredientList, activity: Fra
                 selectedIngredient.setSelected(!selectedIngredient.getSelected())
                 handleSelection(selectedIngredient)
                 notifyDataSetChanged()
+                Log.v("###################", "" + mData.getIngredientList().size)
             }
         })
 
         row.setOnLongClickListener(object: View.OnLongClickListener {
             override fun onLongClick(p0: View?): Boolean {
+                Log.v("###################", "ONLONGCLICK")
                 val adb= AlertDialog.Builder(mContext)
                 adb.setTitle("Delete?");
                 adb.setMessage("Are you sure you want to delete " + mData.getIngredient(position).getName());
@@ -96,6 +97,14 @@ class Tab1ListViewAdapter(context: Context, data : IngredientList, activity: Fra
         })
 
         return row
+    }
+
+    fun setSelectedLeftovers(list : IngredientList) {
+        for (i in list.getIngredientList()) {
+            if(i.getSelected()) {
+                selectedIngredients.addIngredient(i)
+            }
+        }
     }
 
     private fun handleSelection(ingredient : Ingredient) {

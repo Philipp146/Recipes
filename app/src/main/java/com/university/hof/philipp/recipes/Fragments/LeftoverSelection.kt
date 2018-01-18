@@ -11,10 +11,13 @@ import com.university.hof.philipp.recipes.Adapter.LeftoverSelectionListViewAdapt
 import com.university.hof.philipp.recipes.Controller.IngredientController
 import com.university.hof.philipp.recipes.R
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import com.university.hof.philipp.recipes.Model.Ingredients.IngredientList
 import com.university.hof.philipp.recipes.MainActivity
+import com.university.hof.philipp.recipes.Model.Ingredients.Ingredient
 
 class LeftoverSelection : Fragment() {
 
@@ -22,6 +25,7 @@ class LeftoverSelection : Fragment() {
     private var listAdapter : LeftoverSelectionListViewAdapter? = null
     private var listView : ListView? = null
     private var addButton : Button? = null
+    private var customButton : Button? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -52,14 +56,25 @@ class LeftoverSelection : Fragment() {
     private fun setupIngredientsToShow() : IngredientList {
 
         val leftoversAll = IngredientController().getList()
-        leftoversAll.getIngredientList().sortBy { it.getName() }
+        var customLeftovers = ArrayList<Ingredient>()
         val selectedIngredients = arguments.getStringArrayList("selectedLeftovers")
+        Log.v("#############", "ingri " + selectedIngredients)
 
         for(leftover in leftoversAll.getIngredientList()) {
             if (selectedIngredients.contains(leftover.getName())) {
                 leftover.setSelected(true)
             }
+
+            for(selectedName in selectedIngredients) {
+                if (leftover.getName() != selectedName && customLeftovers.all { it.getName() != selectedName } && leftoversAll.getIngredientList().all { it.getName() != selectedName }) {
+                    customLeftovers.add(IngredientController().getCustomIngredient(selectedName))
+                }
+            }
         }
+
+        leftoversAll.addIngredients(customLeftovers)
+
+        leftoversAll.getIngredientList().sortBy { it.getName() }
 
         return leftoversAll
     }
@@ -95,6 +110,14 @@ class LeftoverSelection : Fragment() {
                 handleAddClick()
             }
         })
+
+        customButton = activity.findViewById<Button>(R.id.leftoverSelectionAddCustom)
+        customButton!!.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(p0: View?) {
+
+                addCustomIngredient()
+            }
+        })
     }
 
     private fun handleAddClick() {
@@ -102,5 +125,21 @@ class LeftoverSelection : Fragment() {
         intent.putExtra("selectedLeftovers", listAdapter!!.getSelectedLeftovers().getIngredientList())
         targetFragment.onActivityResult(targetRequestCode, RESULT_OK, intent)
         fragmentManager.popBackStack()
+    }
+
+    private fun addCustomIngredient() {
+        val customName = searchView!!.query.toString()
+
+        //Wenn nichts eingegeben wurde, wird auch nichts in die Liste hinzugefügt
+        if (customName.isEmpty()) {
+            return
+        }
+
+        val inputManager : InputMethodManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(if (null == activity.currentFocus) null else activity.currentFocus.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+
+        val customIngredient = IngredientController().getCustomIngredient(customName)
+
+        listAdapter!!.addCustomIngredient(customIngredient)
     }
 }
