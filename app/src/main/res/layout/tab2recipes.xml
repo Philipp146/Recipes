@@ -40,7 +40,7 @@
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="5"
-            android:text="Search"
+            android:text="@string/search"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
@@ -68,14 +68,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="No Recipes! Use Searchbar"
-        app:layout_constraintBottom_toBottomOf="@id/guideline"
+        android:text=""
+        android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="242dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"

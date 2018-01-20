@@ -77,17 +77,16 @@ class Tab2ListViewAdapter(context: Context, activity: FragmentActivity) : BaseAd
     private fun toggleEmptyView() {
         val emptyView = mActivity.findViewById<TextView>(R.id.empty_view_tab_2)
         val progressBar = mActivity.findViewById<ProgressBar>(R.id.progressBarTab2)
-
         if (this.count != 0) {
             emptyView.visibility = View.GONE
             progressBar.visibility = View.GONE
         }else if(!isFirstCall) {
             progressBar.visibility = View.GONE
-            emptyView.text = "Sorry no recipes found for that name"
+            emptyView.text = mActivity.getString(R.string.no_recipes_found_for_name)
             emptyView.visibility = View.VISIBLE
         }else{
             progressBar.visibility = View.GONE
-            emptyView.text = "Search for recipes by using the search bar"
+            emptyView.text = mActivity.getString(R.string.use_search_bar)
             emptyView.visibility = View.VISIBLE
         }
     }
@@ -127,7 +126,7 @@ class Tab2ListViewAdapter(context: Context, activity: FragmentActivity) : BaseAd
     private fun startDetailScreen(id: String) {
 
         if (!NetworkConnection().isOnline(mContext)) {
-            Toast.makeText(mContext, "Check your internet connection", Toast.LENGTH_LONG).show()
+            Toast.makeText(mContext, mActivity.getString(R.string.connection), Toast.LENGTH_LONG).show()
             return
         }
 

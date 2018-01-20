@@ -58,7 +58,7 @@ class Tab2Recipes : Fragment() {
     override fun onResume() {
         super.onResume()
         val mainActivity = activity as MainActivity
-        mainActivity.getSupportActionBar()!!.setTitle("Recipes")
+        mainActivity.getSupportActionBar()!!.setTitle(getString(R.string.recipes))
     }
 
     private fun loadAdView() {
@@ -85,7 +85,7 @@ class Tab2Recipes : Fragment() {
                 adapter!!.isFirstCall = false
                 val inputManager : InputMethodManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 inputManager.hideSoftInputFromWindow(if (null == activity.currentFocus) null else activity.currentFocus.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-                return false
+                return true
             }
 
             override fun onQueryTextChange(query: String?): Boolean {
@@ -113,7 +113,7 @@ class Tab2Recipes : Fragment() {
 
 
                 if (!NetworkConnection().isOnline(context)) {
-                    Toast.makeText(view!!.context, "Check your internet connection", Toast.LENGTH_LONG).show()
+                    Toast.makeText(view!!.context, getString(R.string.connection), Toast.LENGTH_LONG).show()
                     return
                 }
 
@@ -122,6 +122,7 @@ class Tab2Recipes : Fragment() {
                 //downloadRecipes for search fields
                 val search = searchView!!.query.toString()
                 Client().getRecipes(search, "recipe")
+                adapter!!.isFirstCall = false
                 val inputManager : InputMethodManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 inputManager.hideSoftInputFromWindow(if (null == activity.currentFocus) null else activity.currentFocus.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
             }

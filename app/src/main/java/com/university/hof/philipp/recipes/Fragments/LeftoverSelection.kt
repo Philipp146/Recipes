@@ -50,7 +50,7 @@ class LeftoverSelection : Fragment() {
     override fun onResume() {
         super.onResume()
         val mainActivity = activity as MainActivity
-        mainActivity.getSupportActionBar()!!.setTitle("Leftover Selection")
+        mainActivity.getSupportActionBar()!!.setTitle(getString(R.string.leftover_selection))
     }
 
     private fun setupIngredientsToShow() : IngredientList {
@@ -82,7 +82,7 @@ class LeftoverSelection : Fragment() {
     override fun onDetach() {
         super.onDetach()
         val mainActivity = activity as MainActivity
-        mainActivity.supportActionBar!!.setTitle("Recipes")
+        mainActivity.supportActionBar!!.setTitle(getString(R.string.recipes))
     }
 
     private fun setupLayout() {

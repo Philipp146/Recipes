@@ -79,7 +79,7 @@ class LeftoverRecipesListViewAdapter(context: Context, activity: FragmentActivit
             progressBar.visibility = View.GONE
         }
         else if(!isFirstCall){
-            emptyView.text = "Sorry, no recipes found"
+            emptyView.text = mActivity.getString(R.string.no_recipes_found)
             emptyView.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
         }
@@ -133,7 +133,7 @@ class LeftoverRecipesListViewAdapter(context: Context, activity: FragmentActivit
     private fun startDetailScreen(id : String) {
 
         if (!NetworkConnection().isOnline(mContext)) {
-            Toast.makeText(mContext, "Check your internet connection", Toast.LENGTH_LONG).show()
+            Toast.makeText(mContext, mActivity.getString(R.string.connection), Toast.LENGTH_LONG).show()
             return
         }
 

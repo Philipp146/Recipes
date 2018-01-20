@@ -79,7 +79,7 @@ class Tab1ListViewAdapter(context: Context, data : IngredientList, activity: Fra
                 val adb= AlertDialog.Builder(mContext)
                 adb.setTitle("Delete?");
                 adb.setMessage("Are you sure you want to delete " + mData.getIngredient(position).getName());
-                adb.setNegativeButton("Cancel", null);
+                adb.setNegativeButton(mActivity.getString(R.string.cancel), null);
                 adb.setPositiveButton("Ok", { dialog, whichButton ->
                     val ingredientToRemove = mData.getIngredient(position)
                     mData.removeIngredient(position)

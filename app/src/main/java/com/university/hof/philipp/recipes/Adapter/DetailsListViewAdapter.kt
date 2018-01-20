@@ -36,7 +36,7 @@ class DetailsListViewAdapter(context : Context, activity : FragmentActivity): Ba
         data = RecipeListSingleton.instance.recipeData
         toggleProgressView()
         notifyDataSetChanged()
-        Log.v("UPDATE", "Ingridient List wurde geupdated")
+        Log.v("UPDATE", "Ingredient List wurde geupdated")
     }
 
     //How many rows in list

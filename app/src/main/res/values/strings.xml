@@ -1,17 +1,33 @@
 <resources>
     <string name="app_name">Food4You</string>
     <string name="title_activity_main">Food4You</string>
-    <string name="tab_text_1">Leftovers</string>
     <string name="tab_text_2">Recipes</string>
     <string name="action_settings">About</string>
-    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="section_format" translatable="false">Hello World from section: %1$d</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="search">Search</string>
     <string name="noDataRecipe">Search For Recipes</string>
-    <string name="title_activity_main22">Main22Activity</string>
+    <string name="title_activity_main22" translatable="false">Main22Activity</string>
 
-    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="interstitial_ad_unit_id">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="interstitial_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="tab_text_1">Leftovers</string>
+
+    <string name="leftover_selection">Leftover Selection</string>
+    <string name="recipes">Recipes</string>
+    <string name="details">Recipe Details</string>
+    <string name="leftover_recipes">Leftover Recipes</string>
+    <string name="connection">Check your internet connection</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="add_custom">Add Custom</string>
+    <string name="add_leftovers">Add Leftovers</string>
+    <string name="click_for_more_details">Click for more details</string>
+    <string name="no_recipes_found">Sorry, no recipes found</string>
+    <string name="no_recipes_found_for_name">Sorry, no recipes found for that meal</string>
+    <string name="use_search_bar">Search for recipes by using the search bar</string>
+    <string name="find_recipes">Find Recipes</string>
+    <string name="no_leftovers_selected">No leftovers selected! Click the \'Add Button\' to select your leftovers or use \'Find Recipes\' to see the top 30 recipes</string>
 </resources>

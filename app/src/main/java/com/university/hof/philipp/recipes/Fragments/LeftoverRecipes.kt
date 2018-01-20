@@ -83,7 +83,7 @@ class LeftoverRecipes : Fragment() {
         fab!!.hide()
 
         val mainActivity = activity as MainActivity
-        mainActivity.getSupportActionBar()!!.setTitle("Leftover Recipes")
+        mainActivity.getSupportActionBar()!!.setTitle(getString(R.string.leftover_recipes))
 
         //Download ist bereits erfolgt wenn true
         if (!calledFragment) {
@@ -97,7 +97,7 @@ class LeftoverRecipes : Fragment() {
     override fun onDetach() {
         super.onDetach()
         val mainActivity = activity as MainActivity
-        mainActivity.getSupportActionBar()!!.setTitle("Recipes")
+        mainActivity.getSupportActionBar()!!.setTitle(getString(R.string.recipes))
     }
 
     private fun loadAdView() {

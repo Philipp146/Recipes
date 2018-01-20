@@ -52,7 +52,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="Click for more Details"
+        android:text="@string/click_for_more_details"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="18sp"

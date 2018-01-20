@@ -98,14 +98,14 @@ class Details : Fragment() {
     override fun onResume() {
         super.onResume()
         val mainActivity = activity as MainActivity
-        mainActivity.getSupportActionBar()!!.setTitle("Recipe Details")
+        mainActivity.getSupportActionBar()!!.setTitle(getString(R.string.details))
         //showInterstitial()
     }
 
     override fun onDetach() {
         super.onDetach()
         val mainActivity = activity as MainActivity
-        mainActivity.supportActionBar!!.setTitle("Recipes")
+        mainActivity.supportActionBar!!.setTitle(getString(R.string.recipes))
         saveInterstitialAdCounter()
     }
 
@@ -190,7 +190,7 @@ class Details : Fragment() {
     private fun loadWebView() {
 
         if (!NetworkConnection().isOnline(context)) {
-            Toast.makeText(context, "Check your internet connection", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, getString(R.string.connection), Toast.LENGTH_LONG).show()
             return
         }
 

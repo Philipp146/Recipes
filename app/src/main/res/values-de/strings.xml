@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Food4You</string>
+    <string name="title_activity_main">Food4You</string>
+    <string name="tab_text_2">Rezepte</string>
+    <string name="tab_text_1">Reste</string>
+    <string name="action_settings">Über</string>
+    <string name="search">Suche</string>
+    <string name="noDataRecipe">Suche nache Rezepten</string>
+    <string name="add_custom">Hinzufügen</string>
+    <string name="add_leftovers">Reste übernehmen</string>
+    <string name="leftover_selection">Reste-Auswahl</string>
+    <string name="recipes">Rezepte</string>
+    <string name="details">Rezept-Details</string>
+    <string name="leftover_recipes">Rezepte für Reste</string>
+    <string name="connection">Überprüfe deine Internet-Verbindung</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="click_for_more_details">Klicke für mehr Details</string>
+    <string name="no_recipes_found">Es wurden leider keine Rezepte gefunden</string>
+    <string name="use_search_bar">Suche nach Rezepten, indem du die Suchleiste benutzt</string>
+    <string name="find_recipes">Rezepte finden</string>
+    <string name="no_recipes_found_for_name">Es wurden leider keine Rezepte für das Gericht gefunden</string>
+    <string name="no_leftovers_selected">Keine Reste ausgewählt! Klicke auf \'+\', um deine Reste auszuwählen oder benutze \'Rezepte finden\', um die Top 30 Rezepte zu sehen</string>
+</resources>

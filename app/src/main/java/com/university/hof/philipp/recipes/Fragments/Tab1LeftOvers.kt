@@ -53,7 +53,7 @@ class Tab1LeftOvers : Fragment() {
     override fun onResume() {
         super.onResume()
         val mainActivity = activity as MainActivity
-        mainActivity.supportActionBar!!.setTitle("Recipes")
+        mainActivity.supportActionBar!!.setTitle(getString(R.string.recipes))
 
         if (selectedLeftovers.getIngredientList().size != 0) {
             emptyView!!.visibility = View.GONE
@@ -94,7 +94,7 @@ class Tab1LeftOvers : Fragment() {
     private fun loadLeftOverRecipesFragment() {
 
         if (!NetworkConnection().isOnline(context)) {
-            Toast.makeText(context, "Check your internet connection", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, getString(R.string.connection), Toast.LENGTH_LONG).show()
             return
         }
 
