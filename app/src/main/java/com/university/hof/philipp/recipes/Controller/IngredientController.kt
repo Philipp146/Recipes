@@ -22,6 +22,9 @@ class IngredientController {
         return ingredientList
     }
 
+    /**
+     * Default Ingredients
+     */
     private fun createIngredients() {
 
         for (i in ingredientsNames) {
@@ -78,7 +81,7 @@ class IngredientController {
         }
     }
 
-    public fun getCustomIngredient(name: String) : Ingredient {
+    fun getCustomIngredient(name: String) : Ingredient {
         return Ingredient(name, R.drawable.custom, true)
     }
 }

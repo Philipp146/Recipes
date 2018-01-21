@@ -12,6 +12,9 @@ import android.net.ConnectivityManager
  */
 class NetworkConnection  {
 
+    /**
+     * Checks if the user has a connection to the internet
+     */
     fun isOnline(context : Context): Boolean {
 
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

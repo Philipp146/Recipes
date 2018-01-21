@@ -126,6 +126,7 @@ class Details : Fragment() {
         return interstitialAd
     }
 
+    //Load ad
     private fun loadInterstitial() {
         val adRequest = AdRequest.Builder().setRequestAgent("android_studio:ad_template").build()
         interstitialAd!!.loadAd(adRequest)

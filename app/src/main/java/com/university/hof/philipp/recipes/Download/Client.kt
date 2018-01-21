@@ -21,7 +21,10 @@ class Client {
     private val URL : String = "http://food2fork.com/api/"
 
     //key -> "leftover", "recipe"
-    public fun getRecipes(query : String, key : String) {
+    /**
+     * Downloading all recipes for the given query
+     */
+    fun getRecipes(query : String, key : String) {
         val gson = GsonBuilder().create()
         val retrofit = Retrofit.Builder().baseUrl(URL).
                 addConverterFactory(GsonConverterFactory.create(gson)).build()
@@ -54,7 +57,10 @@ class Client {
         })
     }
 
-    public fun getRecipe(recipeId : String){
+    /**
+     * Downloading details for one recipe
+     */
+    fun getRecipe(recipeId : String){
         val gson = GsonBuilder().create()
         val retrofit = Retrofit.Builder().baseUrl(URL).addConverterFactory(GsonConverterFactory.create(gson)).build()
         val api = retrofit.create(ClientInterfaceApi::class.java)

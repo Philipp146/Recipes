@@ -123,6 +123,8 @@ class Tab2Recipes : Fragment() {
                 val search = searchView!!.query.toString()
                 Client().getRecipes(search, "recipe")
                 adapter!!.isFirstCall = false
+
+                //Hide keyboard
                 val inputManager : InputMethodManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 inputManager.hideSoftInputFromWindow(if (null == activity.currentFocus) null else activity.currentFocus.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
             }

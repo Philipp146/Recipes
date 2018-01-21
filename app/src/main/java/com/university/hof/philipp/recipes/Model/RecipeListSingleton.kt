@@ -7,6 +7,7 @@ import java.util.*
 /**
  * Created by philipp on 22.11.17.
  */
+//Singleton that holds the downloaded data
 class RecipeListSingleton private constructor() : Observable() {
 
         private object Holder {

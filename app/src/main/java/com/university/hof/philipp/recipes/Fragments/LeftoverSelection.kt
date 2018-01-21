@@ -53,6 +53,7 @@ class LeftoverSelection : Fragment() {
         mainActivity.getSupportActionBar()!!.setTitle(getString(R.string.leftover_selection))
     }
 
+    // Handles the correct displaying of the leftovers (selected, unselected, custom)
     private fun setupIngredientsToShow() : IngredientList {
 
         val leftoversAll = IngredientController().getList()
@@ -135,6 +136,7 @@ class LeftoverSelection : Fragment() {
             return
         }
 
+        //Hide keyboard
         val inputManager : InputMethodManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(if (null == activity.currentFocus) null else activity.currentFocus.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
 

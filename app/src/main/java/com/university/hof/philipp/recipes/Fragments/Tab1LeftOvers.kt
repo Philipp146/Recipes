@@ -113,6 +113,7 @@ class Tab1LeftOvers : Fragment() {
         }
     }
 
+    //Load leftover selection with current list of leftovers -> will be checked within the leftover selection screen
     private fun loadIngredientSelection() {
 
         var selectionFragment = LeftoverSelection()
@@ -135,6 +136,7 @@ class Tab1LeftOvers : Fragment() {
         }
     }
 
+    //Shows all ingredients that were selected in the leftover selection
     private fun showListViewWithSelectedIngredients() {
         listAdapter = Tab1ListViewAdapter(context, selectedLeftovers, activity)
         listView!!.adapter = listAdapter //Custom adapter telling listview what to render
@@ -153,6 +155,7 @@ class Tab1LeftOvers : Fragment() {
         return downloadString
     }
 
+    //Receives all the ingredients that were selected in the leftover selection
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
