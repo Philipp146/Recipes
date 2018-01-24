@@ -30,4 +30,6 @@
     <string name="use_search_bar">Search for recipes by using the search bar</string>
     <string name="find_recipes">Find Recipes</string>
     <string name="no_leftovers_selected">No leftovers selected! Click the \'Add Button\' to select your leftovers or use \'Find Recipes\' to see the top 30 recipes</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
 </resources>
