@@ -142,6 +142,10 @@ class LeftoverSelection : Fragment() {
 
         val customIngredient = IngredientController().getCustomIngredient(customName)
 
+        if (listAdapter!!.getSelectedLeftovers().getIngredientList().any { it.getName().equals(customIngredient.getName()) }) {
+            return
+        }
+
         listAdapter!!.addCustomIngredient(customIngredient)
     }
 }
